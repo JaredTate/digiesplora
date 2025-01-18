@@ -2577,10 +2577,6 @@ dl.mempool-histogram .bar:before {
   display:none;
 }
 
-.toggle-menu .section1 .wallets-link .store-icons a:hover{
-  color: #0066cc;
-}
-
 .toggle-menu .section1, .toggle-menu .section2{
   padding: 0 40px;
 }
@@ -2881,4 +2877,28 @@ h3.table-title{
   .sub-nav a{
     margin-right: 20px;
   }
+}
+
+.site-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: auto;
+  text-align: left;
+  padding-left: 30px;
+}
+
+.site-title h1 {
+  color: #0066cc;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.site-title h2 {
+  color: #0066cc;
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.8;
 }

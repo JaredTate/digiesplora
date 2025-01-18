@@ -12,8 +12,8 @@ doctype html
 head
   meta(charset='utf-8')
   title= pageTitle
-  meta(property='og:title', content=process.env.OG_TITLE || process.env.SITE_TITLE || 'Block explorer')
-  meta(name='description', content=process.env.SITE_DESC || 'Esplora Block Explorer')
+  meta(property='og:title', content=process.env.OG_TITLE || process.env.SITE_TITLE || 'DigiExplorer')
+  meta(name='description', content=process.env.SITE_DESC || 'DigiByte Block Explorer')
 
   if canon_url
     link(rel="canonical", href=canon_url)
@@ -30,7 +30,7 @@ head
 
   if process.env.CANONICAL_URL
     //- open search requires the absolute URL of the explorer
-    link(rel='search', href=staticRoot+'opensearch.xml', type='application/opensearchdescription+xml', title=process.env.SITE_TITLE || 'Block Explorer')
+    link(rel='search', href=staticRoot+'opensearch.xml', type='application/opensearchdescription+xml', title=process.env.SITE_TITLE || 'DigiByte Explorer')
 
   != process.env.HEAD_HTML
 
