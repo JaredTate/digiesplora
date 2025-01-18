@@ -1,6 +1,20 @@
-# Esplora Block Explorer
+# DigiEsplora Block Explorer
 
-[![build status](https://api.travis-ci.org/Blockstream/esplora.svg)](https://travis-ci.org/Blockstream/esplora)
+```bash
+$ sudo apt update
+$ sudo apt install nodejs
+$ sudo apt install npm
+$ sudo npm install -g n
+$ sudo n install 23.6.0
+$ sudo n use 23.6.0
+$ git clone https://github.com/JaredTate/digiesplora && cd digiesplora
+$ npm install
+$ export API_URL=http://localhost:3000/ # or https://blockstream.info/api/ if you don't have a local API server
+# (see more config options below)
+$ npm run dev-server
+```
+
+
 [![docker release](https://img.shields.io/docker/pulls/blockstream/esplora.svg)](https://hub.docker.com/r/blockstream/esplora)
 [![MIT license](https://img.shields.io/github/license/blockstream/esplora.svg)](https://github.com/blockstream/esplora/blob/master/LICENSE)
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
