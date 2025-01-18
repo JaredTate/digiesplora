@@ -19,6 +19,12 @@ export default ({ t, theme, page }) =>
           </a>
         </li>
     ) }
+    <li className="nav-item">
+      <a className="nav-link font-h4" href="https://digibyte.org/" target="_blank" rel="noopener noreferrer">
+        <span><img className="menu-logo" alt="" src={`${staticRoot}img/icons/stats-menu-logo.svg`} /></span>
+        <span>DigiByte.org</span>
+      </a>
+    </li>
   </ul>
-    { process.env.NAVBAR_HTML ? navToggle(t, theme, page) : "" }
-  </div>
+  { process.env.NAVBAR_HTML ? navToggle(t, theme, page) : "" }
+</div>
