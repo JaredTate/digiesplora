@@ -32,9 +32,11 @@ body[lang=he] {
   font-family: "Open Sans Hebrew","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-.text-white { color: #FFF; }
+/* Make .text-gray a lighter gray so it’s readable on dark backgrounds: */
+.text-gray { color: #b5bdc2 !important; }
 
-.text-gray { color: #0f1214; }
+/* If you ever need a dark-gray text (on white BG) use a different class.
+   This ensures "text-gray" remains visible on the block/tx dark boxes. */
 
 .text-dark-gray { color: #55585A; }
 
@@ -108,6 +110,7 @@ body[lang=he] {
   line-height: 25px;
   letter-spacing: normal;
   font-style: normal;
+  color:#fff;
 }
 
 .font-p3 {
@@ -117,6 +120,7 @@ body[lang=he] {
   line-height: 25px;
   letter-spacing: normal;
   font-style: normal;
+  color:#fff;
 }
 
 .font-p4 {
@@ -126,6 +130,7 @@ body[lang=he] {
   line-height: 25px;
   letter-spacing: normal;
   font-style: normal;
+  color:#fff;
 }
 
 .font-p5 {
@@ -135,6 +140,7 @@ body[lang=he] {
   line-height: 20px;
   letter-spacing: normal;
   font-style: normal;
+  color:#fff;
 }
 
 .font-btn-1 { font-size: 18px; }
@@ -169,6 +175,7 @@ body[lang=he] {
   letter-spacing: normal;
 }
 
+/* utility classes... unchanged */
 .m-0 { margin: 0; }
 .m-1 { margin: 2.5px; }
 .m-2 { margin: 5px; }
@@ -373,6 +380,7 @@ body[lang=he] {
   border-color: #0C0C0F;
 }
 
+/* Make links bright DGB blue (#00c3ff) so they're visible on dark backgrounds */
 a, a:link, a:visited, a:hover, a:focus {
   color: #0066cc;
   text-decoration: none;
@@ -424,16 +432,15 @@ a, a:link, a:visited, a:hover, a:focus {
   margin-right: 30px;
 }
 
-/* Remove the old yellow border; use #00c3ff instead */
-.main-nav li.active a {
-  border: 1px solid #00c3ff;
-}
-
 .main-nav li a {
   display: flex;
-  color: #ffffff;
+  color: #0066cc;
   align-items: center;
   justify-content: center;
+}
+
+.main-nav li.active a {
+  border: 1px solid #00c3ff;
 }
 
 .main-nav .menu-logo {
@@ -445,6 +452,7 @@ a, a:link, a:visited, a:hover, a:focus {
 #BitcoinTestnet, #LiquidTestnet {
   display: none;
 }
+
 
 /* Menu Toggle Icon -- Toggle Style and Animation*/
 
@@ -859,6 +867,19 @@ table th {
   margin: 50px 0;
 }
 
+/* Make text in the dark block/transaction sections white by default: */
+.block-page, .block-page * {
+  color: #002352 !important;
+}
+.block-page, .block-page .font-h5  {
+  color: #fff !important;
+}
+.transaction-page, .transaction-page * {
+  color: #002352 !important;
+}
+/* If you do not want absolutely everything forced white, remove “*”
+   and selectively style. But user specifically wants all block/tx details visible.*/
+
 .prev-next-blocks-btns {
   display: table;
   table-layout: fixed;
@@ -961,7 +982,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 .blocks-table .blocks-table-row > * {
   display: table-cell;
   vertical-align: middle;
-  color: #B5BDC2;
+  color: #fff;
 }
 
 .blocks-table .blocks-table-row.header,
@@ -1021,7 +1042,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .transactions-table .transactions-table-row.transaction-data > * {
   font-size: 16px;
-  color: #B5BDC2;
+  color: #fff;
 }
 
 .transactions-table .transactions-table-row.header > * {
@@ -1152,6 +1173,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 .stats-table > div {
   height: 52px;
   border-top: 1px solid #2d2f39;
+  fo
   /* font-size: 16px; */
 }
 
@@ -1172,7 +1194,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .stats-table > div > div:nth-child(1) {
   text-transform: uppercase;
-  color: #78838e;
+  color: #fff;
   width: auto;
 }
 
@@ -1209,6 +1231,12 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .transaction-box:not(:first-of-type) {
   margin-top: 24px;
+}
+
+/* Force transaction boxes on dark background to have white text: */
+.transaction-box,
+.transaction-box * {
+  color: #ffffff !important;
 }
 
 .transaction-box {
@@ -1253,7 +1281,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   margin: 20px 30px;
 }
 
-/* Remove the old yellow; use #00c3ff with white text */
+/* remove old "yellow" highlight; use #00c3ff with white text */
 .details-btn > div {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1267,7 +1295,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   width: 100%;
   height: 50px;
   background-color: #00c3ff;
-  color: #fff;
+  color: #002352;
 }
 
 .details-btn > div {
@@ -1439,23 +1467,6 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   vertical-align: text-top;
 }
 
-.transaction-box > .ins-and-outs > .vins > div:not(.vin-loading) > .vin-body > div > div:nth-child(1),
-.transaction-box > .ins-and-outs > .vins > div:not(.vin-loading) .vout-body > div > div:nth-child(1),
-.transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) > .vin-body > div > div:nth-child(1),
-.transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) .vout-body > div > div:nth-child(1) {
-  text-transform: uppercase;
-  color: #78838e;
-  font-weight: 400;
-}
-
-.transaction-box > .ins-and-outs > .vins > div:not(.vin-loading) > .vin-body > div > div:nth-child(2),
-.transaction-box > .ins-and-outs > .vins > div:not(.vin-loading) .vout-body > div > div:nth-child(2),
-.transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) > .vin-body > div > div:nth-child(2),
-.transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) .vout-body > div > div:nth-child(2) {
-  line-height: initial;
-  font-weight: 400;
-}
-
 .transaction-box > .ins-and-outs > div:nth-child(2) {
   padding: 0 12px;
 }
@@ -1498,7 +1509,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 .transaction-box > .footer > div:nth-child(1) > span:nth-child(1) {
-  color: #78838e;
+  color: #fff;
   text-transform: uppercase;
   margin-right: 36px;
 }
@@ -1507,7 +1518,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   width: 74px;
 }
 
-/* Removed the old yellow (rgba(255, 187, 0, 1)); replaced with #00c3ff */
+/* remove old highlight: use #00c3ff: */
 .transaction-box > .footer > div:nth-child(3) {
   text-align: right;
   text-transform: uppercase;
@@ -1523,19 +1534,18 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 /* START FOOTER */
+/* entire footer #0066cc: */
 .explorer-container > .footer {
   width: 100%;
   height: 216px;
   line-height: 1.5;
   margin-top: 100px;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* Remove or override the dark border so entire footer is #0066cc: */
-  border-top: none;
   background-color: #0066cc;
+  /* remove dark border line */
+  border-top: none;
 }
 
 .explorer-container > .footer > .container {
@@ -1575,7 +1585,6 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  /* Keep footer DGB blue: */
   background-color: #0066cc;
 }
 
@@ -1595,19 +1604,6 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   justify-content: space-between;
   align-items: center;
   width: 100%;
-}
-
-.footer_container_content_copyright {
-  color: rgba(169, 177, 182, 1);
-  font-size: 14px;
-  width: 100%;
-  margin-top: 30px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer_container_content_copyright a {
-  color: rgba(169, 177, 182, 1);
 }
 
 .footer_container_content_row_social-media_container {
@@ -1660,7 +1656,6 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   border: 1px solid rgba(169, 177, 182, 1);
   border-radius: 4px;
   padding: 2px 20px;
-  /* margin: 0 auto; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1680,6 +1675,15 @@ img.footer_container_content_onion-links_icon {
 
 .footer_container_content_onion-links_link {
   color: rgba(0, 195, 255, 1) !important;
+}
+
+.footer_container_content_copyright {
+  color: rgba(169, 177, 182, 1);
+  font-size: 14px;
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* END FOOTER */
@@ -1715,16 +1719,14 @@ img.footer_container_content_onion-links_icon {
   line-height: 1.4 !important;
 }
 
-/* preload images. css hack via https://stackoverflow.com/a/14390213/865693 */
+/* preload images. */
 body::after {
   position: absolute; width: 0; height: 0; overflow: hidden; z-index: -1;
   content: url(img/icons/plus.png) url(img/icons/arrow_right_blu.png) url(img/icons/arrow_left_blu.png) url(img/icons/copy.png)
            url(img/icons/menu-logo.svg) url(img/Loading.gif) url(img/icons/search.png);
 }
 
-/* only show loading animation when we're loading for more than 0.5s,
- * so that it doesn't flicker  */
-
+/* only show loading animation after 0.5s to avoid flicker */
 .loading-delay {
   animation: 0.3s showDelayed;
   animation-fill-mode: forwards;
@@ -1745,9 +1747,10 @@ body::after {
   }
 }
 
-/* these should display in left-to-right, even with right-to-left languages */
-/* @noflip */
-.mono, .amount, .footer_container_content_copyright { direction: ltr }
+/* these remain left-to-right, even in rtl languages */
+.mono, .amount, .footer_container_content_copyright {
+  direction: ltr
+}
 
 /* title bar for recent blocks */
 
@@ -1784,7 +1787,6 @@ body::after {
 }
 
 /* arrows */
-
 .arrow-prev {
   background: url(img/icons/arrow_left_blu.png);
 }
@@ -1799,7 +1801,7 @@ body::after {
   background-repeat: no-repeat;
 }
 
-/* flip arrow on RTL languages */
+/* flip arrow on RTL */
 [dir=rtl] .direction-arrow { transform: rotate(180deg) }
 
 .transaction-box .ins-and-outs .direction-arrow {
@@ -1830,7 +1832,6 @@ body::after {
 }
 
 /* navbar changes */
-
 #navbar-menu {
   position: relative;
 }
@@ -1847,18 +1848,18 @@ body::after {
 }
 
 .nav-link:hover {
-  color: rgba(0, 195, 255, 1) !important;
+  color: #00c3ff !important;
 }
 
 .navbar-dark .navbar-nav .active>.nav-link,
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .show>.nav-link {
-  color: rgba(0, 195, 255, 1) !important;
+  color: #00c3ff !important;
 }
 
 .nav-toggler {
-  position: absolute; /* relatively to #navbar-menu */
+  position: absolute; 
   right: 0;
   top: 4px;
 }
@@ -1900,7 +1901,6 @@ body::after {
 .unblinded .vout-header, .unblinded .vin-header {
   background: #04240d;
 }
-
 .theme-light .unblinded .vout-header, .theme-light .unblinded .vin-header {
   background: #e0ffe9;
 }
@@ -1925,13 +1925,10 @@ body::after {
 }
 
 @media only screen and (max-width: 995px) {
-  /* transactions table  */
-
+  /* transactions table: responsive */
   div.transactions-table-row.header {
     display:none !important;
   }
-
-  /* table row (transaction) */
   .transactions-table-row {
     margin: 0 0 1rem 0;
     display: flex !important;
@@ -1939,16 +1936,12 @@ body::after {
     height: auto !important;
     padding: 20px;
   }
-
   .transactions-table-link-row {
     margin-bottom: 20px;
   }
-
   .transactions-table-link-row:nth-child(odd) {
     background: #22242c;
   }
-
-  /* table row (transaction item) */
   .transactions-table .transactions-table-row.block-data > * {
     border: none;
     position: relative;
@@ -1960,12 +1953,9 @@ body::after {
     width: 100% !important;
     text-align: right;
   }
-
   .transactions-table-row {
-    /* Behave  like a "row" */
     display: block;
   }
-
   div.transactions-table-cell {
     display: flex !important;
     justify-content: space-between;
@@ -1974,11 +1964,9 @@ body::after {
     word-break: break-all;
     text-align: right;
   }
-
   .transactions-table .transactions-table-row > div:nth-child(1) {
     padding-left: 0px;
   }
-
   div.transactions-table-cell:before {
     width: 45%;
     padding-right: 10px;
@@ -1987,22 +1975,20 @@ body::after {
     margin-right: 50px;
     word-break: keep-all;
   }
-
-  /*
-  Label the data
-  */
-  div.transactions-table-cell:before { content: attr(data-label); text-align: left; width: auto;}
+  div.transactions-table-cell:before {
+    content: attr(data-label);
+    text-align: left;
+    width: auto;
+  }
 }
 
 @media only screen and (max-width: 990px) {
   .page-search-bar {
     margin: 5px auto 30px auto;
   }
-
   .nav-toggler {
     position: initial;
   }
-
   .nav-bar_moon_icon {
     margin-top: 5px;
   }
@@ -2013,8 +1999,6 @@ body::after {
   div.blocks-table-row.header {
     display:none;
   }
-
-  /* table row (transaction) */
   .blocks-table-row {
     margin: 0 0 1rem 0;
     display: flex;
@@ -2022,16 +2006,12 @@ body::after {
     height: auto !important;
     padding: 20px;
   }
-
   .blocks-table-link-row {
     margin-bottom: 20px;
   }
-
   .blocks-table-link-row:nth-child(odd) {
     background: #22242c;
   }
-
-  /* table row (transaction item) */
   .blocks-table .blocks-table-row.block-data > * {
     border: none;
     position: relative;
@@ -2043,23 +2023,20 @@ body::after {
     width: 100% !important;
     text-align: right;
   }
-
   .blocks-table-row {
-    /* Behave  like a "row" */
     display: block;
   }
-
   div.blocks-table-cell:before {
     width: 45%;
     padding-right: 10px;
     font-weight: 600;
     color: #78838e;
   }
-
-  /*
-  Label the data
-  */
-  div.blocks-table-cell:before { content: attr(data-label); text-align: left; width: auto;}
+  div.blocks-table-cell:before {
+    content: attr(data-label);
+    text-align: left;
+    width: auto;
+  }
 }
 
 /* TRANSACTION*/
@@ -2070,59 +2047,46 @@ body::after {
     height: 150px;
     justify-content: space-evenly;
   }
-
   .transaction-box .ins-and-outs {
     display: flex;
     flex-direction: column;
   }
-
   .transaction-box .ins-and-outs .direction-arrow-container {
     width: 100% !important;
   }
-
   .transaction-box .ins-and-outs .direction-arrow {
     transform: rotate(90deg);
   }
-
   .transaction-box .ins-and-outs > *  {
     padding:  20px 0;
   }
-
   .transaction-box > .footer > * {
     display: block;
     width: 100%;
   }
-
   .transaction-box > .ins-and-outs > .vins > div:not(.vin-loading) > .vin-body > div > div:nth-child(1),
   .transaction-box > .ins-and-outs > .vins > div:not(.vin-loading) .vout-body > div > div:nth-child(1),
   .transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) > .vin-body > div > div:nth-child(1),
   .transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) .vout-body > div > div:nth-child(1) {
     text-transform: lowercase;
   }
-
   .footer_container_content_copyright {
     font-size: 14px;
   }
-
-  /* arrow */
   .transaction-box > .ins-and-outs > div:nth-child(2) {
     padding: 0 !important;
   }
-
   .transaction-box .ins-and-outs .direction-arrow {
     display: flex;
     justify-self: center;
   }
-
   .ins-and-outs {
     position: relative !important;
   }
-
   .ins-and-outs_spacer {
     height: 20px;
     width: 10px;
   }
-
   .direction-arrow-container {
     width: 100%;
     height: auto !important;
@@ -2135,16 +2099,13 @@ body::after {
   .explorer-container > .footer {
     height: 330px;
   }
-
   .explorer-container > .footer > .container {
     flex-direction: column;
   }
-
   .footer_container_content {
     margin-top: 35px;
     padding-bottom: 50px;
   }
-
   .footer_container_content_onion-links {
     margin: 15px auto 0 auto;
   }
@@ -2164,61 +2125,50 @@ body::after {
   .page-search-bar {
     margin: 5px auto 30px auto;
   }
-
   .explorer-title-container h1 {
     font-size: 30px;
   }
-
   .vin-body-row {
     display: flex !important;
     flex-direction: column !important;
     margin: 5px 0;
   }
-
   .vin-body-row > .mono {
     margin-top: 5px;
   }
-
   .vout-body-row {
     display: flex !important;
     flex-direction: column !important;
     margin: 5px 0;
   }
-
   .vout-body-row > .mono {
     margin-top: 5px;
   }
-
   .vout-header-container {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center;
     align-items: flex-start;
   }
-
   .vout-header-container > * {
     text-align: left !important;
     margin: 0 !important;
     padding: 3px 0;
   }
-
   .vin-header-container {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center;
     align-items: flex-start;
   }
-
   .vin-header-container > * {
     text-align: left !important;
     margin: 0 !important;
     padding: 3px 0;
   }
-
   .title-bar-recent h1 {
     font-size: 18px;
   }
-  
   .title-bar-recent h1 a {
     margin-right: 20px;
   }
@@ -2228,7 +2178,6 @@ body::after {
   .explorer-title-container h1 {
     font-size: 25px;
   }
-
   .explorer-title-container_logo {
     height: 35px;
     width: auto;
@@ -2240,22 +2189,19 @@ body::after {
   .footer {
     height: auto !important;
   }
-
   .footer_container_content_row_onion_container {
     margin-top: 10px;
   }
-
   .footer_container_content_onion-links {
     flex-direction: column;
     margin-top: 25px;
   }
-
   .footer_container_content_onion-links_row {
     text-align: center;
   }
 }
 
-/* "Copied!" tooltip for click-to-copy buttons */
+/* Copied! tooltip for click-to-copy buttons */
 .code-button-btn {
   position: relative;
 }
@@ -2286,7 +2232,6 @@ body::after {
   top: 26px;
   white-space: nowrap;
 }
-
 .code-button-btn:before {
   transform: scale3d(.2,.2,1);
   transition: all .2s ease-in-out;
@@ -2295,7 +2240,6 @@ body::after {
   transform: translate3d(0,6px,0);
   transition: all .1s ease-in-out;
 }
-
 .code-button-btn.show-tooltip:before,
 .code-button-btn.show-tooltip:after {
   opacity: 1;
@@ -2509,8 +2453,7 @@ dl.mempool-histogram .bar:before {
 }
 
 /**** 
-  * Burger Menu Hover works on Bigscreen only 
-  * Hover is used for displaying the dropdown menu to support NO-JS
+  * Burger Menu Hover on big screens 
 *****/
 @media only screen and (min-width: 500px) {
   .toggle-container:hover .toggle-menu {
@@ -2518,17 +2461,14 @@ dl.mempool-histogram .bar:before {
     padding: 20px 0;
     visibility: visible;
   }
-
   .toggle-container:hover .burger-icon span {
     opacity: 0;
     top: 50%;
   }
-
   .toggle-container:hover .burger-icon span:first-child {
     opacity: 1;
     transform: rotate(45deg);
   }
-
   .toggle-container:hover .burger-icon span:last-child {
     opacity: 1;
     transform: rotate(-45deg);
@@ -2632,7 +2572,8 @@ dl.mempool-histogram .bar:before {
   display:none;
 }
 
-.toggle-menu .section1, .toggle-menu .section2 {
+.toggle-menu .section1,
+.toggle-menu .section2 {
   padding: 0 40px;
 }
 
@@ -2704,7 +2645,7 @@ dl.mempool-histogram .bar:before {
   border-radius: 100%;
 }
 
-form {
+.form {
   width: 100%;
 }
 
@@ -2769,6 +2710,7 @@ a.back-link img {
 
 h3.table-title {
   margin: 10px 40px 30px;
+  color: #fff;
 }
 
 .dash-container .tx-container {
@@ -2792,23 +2734,16 @@ h3.table-title {
   .nav-link {
     padding: 0.4rem;
   }
-
   .toggle-container {
     z-index: 100;
   }
-
   .toggle-menu .section2 .link-list {
     margin-right: 20px;
   }
-
-  .toggle-menu .section1, .toggle-menu .section2 {
+  .toggle-menu .section1,
+  .toggle-menu .section2 {
     padding: 0 20px;
   }
-
-  /**** 
-   * Burger Menu for Mobile 
-   * A javascript function (toggleIcon) adds a className (open-menu) to toggle the menu
-  *****/
   .toggle-container .toggle-menu {
     width: 95vw;
     position: absolute;
@@ -2817,87 +2752,69 @@ h3.table-title {
     z-index: 1;
     transition: none;
   }
-
   .toggle-container.open-menu .toggle-menu {
     visibility: visible;
     height: auto;
     padding: 20px 0;
   }
-
   .toggle-container.open-menu .burger-icon span {
     opacity: 0;
     top: 50%;
   }
-
   .toggle-container.open-menu .burger-icon span:first-child {
     opacity: 1;
     transform: rotate(45deg);
   }
-
   .toggle-container.open-menu .burger-icon span:last-child {
     opacity: 1;
     transform: rotate(-45deg);
   }
-
   .toggle-container .toggle-menu .toggle-menu-header {
     justify-content: flex-start;
   }
-
   .toggle-menu .section1 .wallets-link {
     flex-direction: column;
   }
-
   .toggle-menu .section1 .wallets-link .wallets-logo {
     width: auto;
   }
-
   .toggle-menu .section1 .wallets-link .store-icons {
     width: 100%;
     margin-top: 30px;
   }
-
   .navbar-brand {
     margin-right: 0;
   }
-
   .main-nav li {
     margin-right: 15px;
   }
-
   .sub-nav-container {
     height: auto;
     flex-direction: column-reverse;
     padding: 30px 10px 10px 10px;
   }
-
   .sub-nav {
     margin-top: 30px;
     justify-content: space-between;
     padding-left: 5px;
     padding-right: 5px;
   }
-
   .sub-nav a {
     margin-right: 0;
   }
-
   .search-bar {
     margin: 0;
     max-width: 100%;
   }
-
   .blocks-table .blocks-table-row, .transactions-table .transactions-table-row {
     padding:20px;
   }
-
   .assets-table .assets-table-row {
     padding:20px;
   }
-
   .stats-table {
     padding: 20px;
   }
-
   h3.table-title {
     margin: 10px 20px 30px;
   }
@@ -2938,7 +2855,7 @@ h3.table-title {
 }
 
 .site-title h1 {
-  color: #ffffff; /* White text over the #0066cc nav */
+  color: #0066cc; /* White text over the #0066cc nav */
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
