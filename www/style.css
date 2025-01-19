@@ -1338,6 +1338,17 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   background-image: url(img/icons/minus.png);
 }
 
+/* Make the "Details" button text #002352 */
+.details-btn > div > div:nth-child(1) {
+  color: #002352 !important;
+}
+
+/* Make the "Previous"/"Next" button text white */
+.prev-next-blocks-btns a div span {
+  color: #fff !important;
+}
+
+
 .transaction-box > .ins-and-outs {
   display: table;
   table-layout: fixed;
@@ -2614,27 +2625,31 @@ dl.mempool-histogram .bar:before {
   justify-content: space-between;
   align-items: center;
   height: 79px;
+  gap: 20px; /* Add gap between nav and search */
 }
 
 .sub-nav {
   display: flex;
-  width: 100%;
+  flex-shrink: 0; /* Prevent nav from shrinking */
+  gap: 50px; /* Use gap instead of margins for spacing */
 }
 
+/* Remove the old margin-right from sub-nav links */
 .sub-nav a {
-  margin-right: 50px;
   color: #ffffff;
   padding-bottom: 10px;
 }
 
-.sub-nav .active {
-  color: #ffffff;
-  position: relative;
+/* Make search container take remaining space */
+.search {
+  flex: 1;
+  min-width: 300px; /* Ensure minimum searchbar width */
 }
 
-/* Remove old bottom border #ffbb00; use #00c3ff: */
-.sub-nav .active {
-  border-bottom: solid 2px #00c3ff;
+.search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .sub-nav a sup.highlight {
