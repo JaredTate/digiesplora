@@ -2,7 +2,7 @@ import Snabbdom from 'snabbdom-pragma'
 import layout from './layout'
 import { txBox } from './tx'
 import { updateQuery } from '../util'
-import { formatTime, formatHex, formatNumber } from './util'
+import { formatTime, formatHex, formatNumber, formatBlockNumber } from './util'
 import { blockTxsPerPage as perPage } from '../const'
 import loader from '../components/loading'
 
@@ -16,7 +16,7 @@ export default ({ t, block: b, blockStatus: status, blockTxs, openTx, spends, op
     <div className="block-page">
       <div className="container">
         <div>
-          <h1 className="block-header-title font-h2">{t`Block ${b.height}`}</h1>
+          <h1 className="block-header-title font-h2">{t`Block ${formatBlockNumber(b.height)}`}</h1>
           <div className="block-hash font-p1"><span className="text-gray">{b.id}</span>
             { process.browser && <div className="code-button">
               <div className="code-button-btn" role="button" data-clipboardCopy={b.id}></div>

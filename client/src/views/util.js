@@ -122,3 +122,5 @@ export const getSupply = (asset, t) => {
 }
 
 export const strTruncate  = (str) => str.substr(0, 10) + '...' + str.substr(str.length-4, str.length);
+
+export const formatBlockNumber = num => num.toLocaleString()

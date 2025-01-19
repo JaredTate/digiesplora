@@ -1,5 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
-import { formatTime, formatNumber } from './util'
+import { formatTime, formatNumber, formatBlockNumber } from './util'
 import loader from '../components/loading'
 
 const staticRoot = process.env.STATIC_ROOT || ''
@@ -20,7 +20,7 @@ export const blks = (blocks, viewMore, loadMore, { t, loading, ...S }) =>
       { blocks && blocks.map(b =>
         <div className="blocks-table-link-row">
         <a className="blocks-table-row block-data" href={`block/${b.id}`}>
-          <div className="blocks-table-cell highlighted-text font-p2" data-label={t`Height`}>{b.height}</div>
+          <div className="blocks-table-cell highlighted-text font-p2" data-label={t`Height`}>{formatBlockNumber(b.height)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Timestamp`}>{formatTime(b.timestamp, false)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Transactions`}>{formatNumber(b.tx_count)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Size (KB)`}>{formatNumber(b.size/1000)}</div>
