@@ -1,7 +1,7 @@
 import Snabbdom from 'snabbdom-pragma'
 
 const staticRoot = process.env.STATIC_ROOT || ''
-const links = process.env.FOOTER_LINKS ? JSON.parse(process.env.FOOTER_LINKS) : { [staticRoot+'img/github_blue.png']: 'https://github.com/blockstream/esplora' }
+const links = process.env.FOOTER_LINKS ? JSON.parse(process.env.FOOTER_LINKS) : { [staticRoot+'img/github_blue.png']: 'https://github.com/JaredTate/digiesplora' }
 
 
 export default ({ t, page }) =>
@@ -46,7 +46,7 @@ export default ({ t, page }) =>
           { process.env.TERMS && <span><a href={ process.env.TERMS } target="_blank">Terms &amp; </a></span> }
           { process.env.PRIVACY && <span><a href={ process.env.PRIVACY } target="_blank">Privacy</a></span> }
           </div>
-          <div>{ process.env.SITE_FOOTER || t`Powered by esplora` }</div>
+          <div>{ process.env.SITE_FOOTER || t`Copyright © 2025 DigiByte Developers. Released under MIT license. All rights reserved. Powered by DigiEsplora` }</div>
         </div>
       </div>
     </div>
