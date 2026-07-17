@@ -5,7 +5,7 @@ import vinView from './tx-vin'
 import voutView from './tx-vout'
 import privacyAnalysisView from './tx-privacy-analysis'
 import segwitGainsView from './tx-segwit-gains'
-import { digidollarBadge, digidollarTxRows } from './digidollar'
+import { digidollarBadge, digidollarTxRows, digidollarTxTitleFlag } from './digidollar'
 import { formatSat, formatTime, formatVMB, formatNumber } from './util'
 import { isAllUnconfidential, isAllNative, isRbf, outTotal, updateQuery } from '../util'
 
@@ -32,7 +32,10 @@ export default ({ t, tx, tipHeight, spends, openTx, page, unblinded, ...S }) => 
     <div className="transaction-page">
       <div className="container">
         <div>
-          <h1 className="transaction-header-title font-h2">{t`Transaction`}</h1>
+          <h1 className="transaction-header-title font-h2 page-title-with-dd">
+            <span>{t`Transaction`}</span>
+            {digidollarTxTitleFlag(tx)}
+          </h1>
           <div className="block-hash font-p1">
             <span className="text-gray">{tx.txid}</span>
             { process.browser && <div className="code-button">

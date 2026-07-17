@@ -1276,6 +1276,45 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   font-weight: 600;
 }
 
+.page-title-with-dd {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  line-height: 1.15;
+}
+
+.digidollar-title-group {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.digidollar-title-separator {
+  color: #d9e8ee;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.digidollar-activity-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 9px;
+  border: 1px solid #4cc9a7;
+  border-radius: 4px;
+  background: #0d2a31;
+  color: #eafaff;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
 .digidollar-badge {
   display: inline-flex;
   align-items: center;
@@ -1342,13 +1381,26 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 .digidollar-badge.oracle {
-  background: #27233d;
-  border-color: #b59cff;
-  color: #efeaff !important;
+  background: #0d2744;
+  border-color: #45a6ff;
+  color: #e3f3ff !important;
 }
 
 .digidollar-badge.oracle .digidollar-mark {
-  background: #b59cff;
+  background: #45a6ff;
+}
+
+.digidollar-badge.title {
+  min-height: 28px;
+  margin-left: 0;
+  padding: 4px 10px 4px 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.digidollar-badge.title .digidollar-mark {
+  height: 20px;
 }
 
 .digidollar-badge.compact {

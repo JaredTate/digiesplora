@@ -35,7 +35,8 @@ assert.deepStrictEqual(
     { digidollar: { tx_type: 'transfer' } },
     { digidollar: { tx_type: 'mint' } },
     { digidollar: { tx_type: 'burn' } },
+    { digidollar: { oracle_bundles: [{ valid: true }] } },
     {}
   ]),
-  ['mint', 'transfer', 'burn']
+  ['mint', 'transfer', 'burn', 'oracle']
 )

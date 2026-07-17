@@ -3,7 +3,7 @@ import { formatTime } from './util'
 
 const titleCase = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : ''
 const displayType = type => type == 'redeem' ? 'burn' : type
-const typeOrder = ['mint', 'transfer', 'burn']
+const typeOrder = ['mint', 'transfer', 'burn', 'oracle']
 
 export const formatDigiDollarAmount = cents => {
   const sign = cents < 0 ? '-' : ''
@@ -25,6 +25,12 @@ export const getDigiDollarLabel = tx => {
   return null
 }
 
+const typeBadge = (type, label=titleCase(type), extraClass='') =>
+  <span className={`digidollar-badge ${extraClass} ${type}`}>
+    <span className="digidollar-mark">DD</span>
+    <span>{label}</span>
+  </span>
+
 const getDigiDollarClass = tx => {
   const info = tx && tx.digidollar
   if (!info) return ''
@@ -36,12 +42,17 @@ const getDigiDollarClass = tx => {
   return parsed && parsed.tx_type ? displayType(parsed.tx_type) : ''
 }
 
-export const digidollarBadge = tx => {
+export const digidollarBadge = (tx, extraClass='') => {
   const label = getDigiDollarLabel(tx)
       , kind = getDigiDollarClass(tx)
-  return label && <span className={`digidollar-badge ${kind}`}>
-    <span className="digidollar-mark">DD</span>
-    <span>{label.replace(/^DigiDollar /, '')}</span>
+  return label && typeBadge(kind, label.replace(/^DigiDollar /, ''), extraClass)
+}
+
+export const digidollarTxTitleFlag = tx => {
+  const badge = digidollarBadge(tx, 'title')
+  return badge && <span className="digidollar-title-group">
+    <span className="digidollar-title-separator">-</span>
+    {badge}
   </span>
 }
 
@@ -53,6 +64,8 @@ export const getBlockDigiDollarTypes = txs => {
     if (!info) return
 
     const types = [info.tx_type].concat((info.metadata || []).map(meta => meta.tx_type))
+    if (info.oracle_bundles && info.oracle_bundles.length) types.push('oracle')
+
     types.forEach(type => {
       const typeName = displayType(type)
       if (typeOrder.includes(typeName)) seen.add(typeName)
@@ -62,15 +75,13 @@ export const getBlockDigiDollarTypes = txs => {
   return typeOrder.filter(type => seen.has(type))
 }
 
-export const digidollarBlockFlag = txs => {
+export const digidollarBlockTitleFlag = txs => {
   const types = getBlockDigiDollarTypes(txs)
-  return types.length && <div className="digidollar-block-flag">
-    <strong>DigiDollar activity</strong>
-    {types.map(type => <span className={`digidollar-badge compact ${type}`}>
-      <span className="digidollar-mark">DD</span>
-      <span>{titleCase(type)}</span>
-    </span>)}
-  </div>
+  return types.length && <span className="digidollar-title-group block-dd-activity">
+    <span className="digidollar-title-separator">-</span>
+    <span className="digidollar-activity-label">DD Activity</span>
+    {types.map(type => typeBadge(type, titleCase(type), 'title compact'))}
+  </span>
 }
 
 const firstParsed = info =>
