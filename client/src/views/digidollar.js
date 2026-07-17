@@ -16,6 +16,9 @@ export const formatDigiDollarAmount = cents => {
 export const formatOraclePrice = microUsd =>
   `$${((microUsd || 0) / 1000000).toFixed(6)}/DGB`
 
+const formatDigiDollarBadgeAmount = cents =>
+  formatDigiDollarAmount(cents).replace(/ DD$/, '')
+
 export const getDigiDollarLabel = tx => {
   const info = tx && tx.digidollar
   if (!info) return null
@@ -42,10 +45,34 @@ const getDigiDollarClass = tx => {
   return parsed && parsed.tx_type ? displayType(parsed.tx_type) : ''
 }
 
-export const digidollarBadge = (tx, extraClass='') => {
+export const getDigiDollarAmountCents = tx => {
+  const info = tx && tx.digidollar
+  if (!info) return null
+
+  const amounts = (info.metadata || [])
+    .filter(meta => meta.valid && meta.amount_cents != null)
+    .map(meta => meta.amount_cents)
+
+  if (amounts.length) return amounts.reduce((sum, amount) => sum + amount, 0)
+
+  const parsed = firstParsed(info)
+  return parsed && parsed.amount_cents != null ? parsed.amount_cents : null
+}
+
+export const getDigiDollarBadgeLabel = tx => {
   const label = getDigiDollarLabel(tx)
+      , amount = getDigiDollarAmountCents(tx)
+
+  if (!label) return null
+
+  const shortLabel = label.replace(/^DigiDollar /, '')
+  return amount != null ? `${shortLabel} ${formatDigiDollarBadgeAmount(amount)}` : shortLabel
+}
+
+export const digidollarBadge = (tx, extraClass='') => {
+  const label = getDigiDollarBadgeLabel(tx)
       , kind = getDigiDollarClass(tx)
-  return label && typeBadge(kind, label.replace(/^DigiDollar /, ''), extraClass)
+  return label && typeBadge(kind, label, extraClass)
 }
 
 export const digidollarTxTitleFlag = tx => {
@@ -75,12 +102,43 @@ export const getBlockDigiDollarTypes = txs => {
   return typeOrder.filter(type => seen.has(type))
 }
 
+export const getBlockDigiDollarSummary = txs => {
+  const summary = {}
+      , add = (type, amount) => {
+        const typeName = displayType(type)
+        if (!typeOrder.includes(typeName)) return
+        if (amount != null) summary[typeName] = (summary[typeName] || 0) + amount
+        else if (!(typeName in summary)) summary[typeName] = null
+      }
+
+  ;(txs || []).forEach(tx => {
+    const info = tx && tx.digidollar
+    if (!info) return
+
+    const metadata = (info.metadata || []).filter(meta => meta.valid && meta.tx_type)
+    if (metadata.length) metadata.forEach(meta => add(meta.tx_type, meta.amount_cents))
+    else if (info.tx_type) add(info.tx_type, null)
+
+    if (info.oracle_bundles && info.oracle_bundles.length) add('oracle', null)
+  })
+
+  return typeOrder
+    .filter(type => type in summary)
+    .map(type => ({ type, amount_cents: summary[type] }))
+}
+
 export const digidollarBlockTitleFlag = txs => {
-  const types = getBlockDigiDollarTypes(txs)
-  return types.length && <span className="digidollar-title-group block-dd-activity">
+  const summary = getBlockDigiDollarSummary(txs)
+  return summary.length && <span className="digidollar-title-group block-dd-activity">
     <span className="digidollar-title-separator">-</span>
     {typeBadge('activity', 'Activity', 'title')}
-    {types.map(type => typeBadge(type, titleCase(type), 'title compact'))}
+    {summary.map(({ type, amount_cents }) =>
+      typeBadge(
+        type,
+        amount_cents != null ? `${titleCase(type)} ${formatDigiDollarBadgeAmount(amount_cents)}` : titleCase(type),
+        'title compact'
+      )
+    )}
   </span>
 }
 

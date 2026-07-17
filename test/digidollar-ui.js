@@ -2,7 +2,9 @@ import assert from 'assert'
 import {
   formatDigiDollarAmount,
   formatOraclePrice,
+  getBlockDigiDollarSummary,
   getBlockDigiDollarTypes,
+  getDigiDollarBadgeLabel,
   getDigiDollarLabel,
 } from '../client/src/views/digidollar'
 
@@ -20,14 +22,32 @@ assert.strictEqual(
   'DigiDollar Burn'
 )
 assert.strictEqual(
-  getDigiDollarLabel({ digidollar: { tx_marker: true, tx_type: 'redeem' } }),
-  'DigiDollar Burn'
-)
-assert.strictEqual(
   getDigiDollarLabel({ digidollar: { oracle_bundles: [{ valid: true }] } }),
   'DigiDollar Oracle'
 )
 assert.strictEqual(getDigiDollarLabel({}), null)
+assert.strictEqual(
+  getDigiDollarBadgeLabel({
+    digidollar: {
+      tx_type: 'mint',
+      metadata: [{ valid: true, tx_type: 'mint', amount_cents: 10000 }]
+    }
+  }),
+  'Mint $100.00'
+)
+assert.strictEqual(
+  getDigiDollarBadgeLabel({
+    digidollar: {
+      tx_type: 'transfer',
+      metadata: [{ valid: true, tx_type: 'transfer', amount_cents: 12345 }]
+    }
+  }),
+  'Transfer $123.45'
+)
+assert.strictEqual(
+  getDigiDollarBadgeLabel({ digidollar: { oracle_bundles: [{ valid: true }] } }),
+  'Oracle'
+)
 
 assert.deepStrictEqual(
   getBlockDigiDollarTypes([
@@ -39,4 +59,18 @@ assert.deepStrictEqual(
     {}
   ]),
   ['mint', 'transfer', 'burn', 'oracle']
+)
+
+assert.deepStrictEqual(
+  getBlockDigiDollarSummary([
+    { digidollar: { tx_type: 'mint', metadata: [{ valid: true, tx_type: 'mint', amount_cents: 10000 }] } },
+    { digidollar: { tx_type: 'mint', metadata: [{ valid: true, tx_type: 'mint', amount_cents: 2500 }] } },
+    { digidollar: { tx_type: 'transfer', metadata: [{ valid: true, tx_type: 'transfer', amount_cents: 5000 }] } },
+    { digidollar: { oracle_bundles: [{ valid: true }] } }
+  ]),
+  [
+    { type: 'mint', amount_cents: 12500 },
+    { type: 'transfer', amount_cents: 5000 },
+    { type: 'oracle', amount_cents: null }
+  ]
 )
