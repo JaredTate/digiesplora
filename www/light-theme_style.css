@@ -164,6 +164,19 @@ body.theme-light {
     color: #25323d;
 }
 
+.theme-light .page-title-with-dd .digidollar-badge.title {
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(7, 19, 26, 0.18);
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title > span:not(.digidollar-mark) {
+    color: #ffffff !important;
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title .digidollar-mark {
+    color: #07131a;
+}
+
 .theme-light .digidollar-block-flag {
     color: #34444f;
     background-color: #eefaf6;

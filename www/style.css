@@ -1398,6 +1398,54 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   height: 20px;
 }
 
+.page-title-with-dd .digidollar-badge.title {
+  min-height: 30px;
+  padding: 5px 12px 5px 5px;
+  border: 2px solid #061b2d;
+  background: #07131a;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 18px;
+  box-shadow: 0 4px 10px rgba(7, 19, 26, 0.18);
+  text-shadow: none;
+}
+
+.page-title-with-dd .digidollar-badge.title > span:not(.digidollar-mark) {
+  color: #ffffff !important;
+}
+
+.page-title-with-dd .digidollar-badge.title .digidollar-mark {
+  height: 21px;
+  min-width: 30px;
+  color: #07131a;
+}
+
+.page-title-with-dd .digidollar-badge.title.activity {
+  background: #12283f;
+  border-color: #009de0;
+}
+
+.page-title-with-dd .digidollar-badge.title.mint {
+  background: #0e5130;
+  border-color: #18a85f;
+}
+
+.page-title-with-dd .digidollar-badge.title.oracle {
+  background: #0a4f86;
+  border-color: #1187c1;
+}
+
+.page-title-with-dd .digidollar-badge.title.transfer {
+  background: #0a4f86;
+  border-color: #1187c1;
+}
+
+.page-title-with-dd .digidollar-badge.title.burn {
+  background: #7c1d1d;
+  border-color: #d44747;
+}
+
 .digidollar-badge.compact {
   min-height: 20px;
   margin-left: 0;
