@@ -5,6 +5,7 @@ import vinView from './tx-vin'
 import voutView from './tx-vout'
 import privacyAnalysisView from './tx-privacy-analysis'
 import segwitGainsView from './tx-segwit-gains'
+import { digidollarBadge, digidollarTxRows } from './digidollar'
 import { formatSat, formatTime, formatVMB, formatNumber } from './util'
 import { isAllUnconfidential, isAllNative, isRbf, outTotal, updateQuery } from '../util'
 
@@ -61,7 +62,7 @@ export const txBox = (tx, { t, openTx, tipHeight, spends, query, unblinded, ...S
 
   return <div className="transaction-box" id="transaction-box">
     <div className="header">
-      <div className="txn font-p2"><a href={`tx/${tx.txid}`}>{tx.txid}</a></div>
+      <div className="txn font-p2"><a href={`tx/${tx.txid}`}>{tx.txid}</a>{digidollarBadge(tx)}</div>
       {btnDetails(tx.txid, vopt.isOpen, query, t)}
     </div>
     <div className="ins-and-outs">
@@ -165,6 +166,7 @@ const txHeader = (tx, { tipHeight, mempool, feeEst, t
       <div>{t`Version`}</div>
       <div>{tx.version}</div>
     </div>
+    { digidollarTxRows(tx) }
     <div>
       <div>{t`Lock time`}</div>
       <div>{tx.locktime}</div>

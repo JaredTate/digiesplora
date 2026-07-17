@@ -6,6 +6,7 @@
     "prerender-server": "cd prerender-server && npm start",
     "postinstall": "(cd client && npm install) && (cd prerender-server && npm install)",
     "dist": "./build.sh",
+    "test": "babel-node test/digidollar-ui.js",
     "l10n:fetch": "./lang/util/fetch-transifex.sh",
     "l10n:update-strings": "./lang/util/update-strings.sh"
   },

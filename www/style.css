@@ -1276,6 +1276,124 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   font-weight: 600;
 }
 
+.digidollar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  max-width: 100%;
+  min-height: 24px;
+  margin-left: 12px;
+  padding: 3px 8px 3px 4px;
+  border: 1px solid #4cc9a7;
+  border-radius: 4px;
+  background: #102b26;
+  color: #b9ffea !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  vertical-align: middle;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(76, 201, 167, 0.08);
+}
+
+.digidollar-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: #4cc9a7;
+  color: #071815;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.digidollar-badge.mint {
+  background: #102d22;
+  border-color: #5fd68b;
+  color: #dcffe8 !important;
+}
+
+.digidollar-badge.mint .digidollar-mark {
+  background: #5fd68b;
+}
+
+.digidollar-badge.transfer {
+  background: #10293a;
+  border-color: #62b5ff;
+  color: #e0f3ff !important;
+}
+
+.digidollar-badge.transfer .digidollar-mark {
+  background: #62b5ff;
+}
+
+.digidollar-badge.burn {
+  background: #351e22;
+  border-color: #ff7d7d;
+  color: #ffe3e3 !important;
+}
+
+.digidollar-badge.burn .digidollar-mark {
+  background: #ff7d7d;
+}
+
+.digidollar-badge.oracle {
+  background: #27233d;
+  border-color: #b59cff;
+  color: #efeaff !important;
+}
+
+.digidollar-badge.oracle .digidollar-mark {
+  background: #b59cff;
+}
+
+.digidollar-badge.compact {
+  min-height: 20px;
+  margin-left: 0;
+  padding: 2px 7px 2px 3px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.digidollar-badge.compact .digidollar-mark {
+  min-width: 22px;
+  height: 16px;
+  font-size: 10px;
+}
+
+.digidollar-block-flag {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 9px 11px;
+  border: 1px solid rgba(76, 201, 167, 0.32);
+  border-left: 4px solid #4cc9a7;
+  border-radius: 6px;
+  background: rgba(76, 201, 167, 0.08);
+  color: #d9e8ee;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.digidollar-block-flag strong {
+  margin-right: 2px;
+}
+
+.digidollar-row > div:first-child {
+  color: #9aa7b2 !important;
+}
+
+.digidollar-long {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .details-btn {
   width: 200px;
   margin: 20px 30px;

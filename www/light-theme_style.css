@@ -119,6 +119,43 @@ body.theme-light {
     border: 1px solid #dcdcdc;
 }
 
+.theme-light .digidollar-badge {
+    background-color: #e7f7f1;
+    border-color: #2c9a7d;
+    color: #12634f !important;
+}
+
+.theme-light .digidollar-badge.mint {
+    background-color: #e9f8ef;
+    border-color: #2d9b57;
+    color: #146336 !important;
+}
+
+.theme-light .digidollar-badge.transfer {
+    background-color: #e9f4ff;
+    border-color: #267fc8;
+    color: #14527f !important;
+}
+
+.theme-light .digidollar-badge.burn {
+    background-color: #fff0f0;
+    border-color: #c94444;
+    color: #8d2525 !important;
+}
+
+.theme-light .digidollar-badge.oracle {
+    background-color: #f1edff;
+    border-color: #7b62c8;
+    color: #4c3b89 !important;
+}
+
+.theme-light .digidollar-block-flag {
+    color: #34444f;
+    background-color: #eefaf6;
+    border-color: #b9e4d7;
+    border-left-color: #2c9a7d;
+}
+
 .theme-light .transaction-box > .ins-and-outs > .vins > div:not(.vin-loading), .theme-light .transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) {
     background-color: #fff;
     border: 1px solid #dcdcdc;

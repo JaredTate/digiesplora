@@ -1,6 +1,7 @@
 import Snabbdom from 'snabbdom-pragma'
 import layout from './layout'
 import { txBox } from './tx'
+import { digidollarBlockFlag } from './digidollar'
 import { updateQuery } from '../util'
 import { formatTime, formatHex, formatNumber, formatBlockNumber } from './util'
 import { blockTxsPerPage as perPage } from '../const'
@@ -124,6 +125,7 @@ export default ({ t, block: b, blockStatus: status, blockTxs, openTx, spends, op
 
       <div className="transactions">
         <h3 className="font-h3">{txsShownText(b.tx_count, goBlock.start_index, blockTxs && blockTxs.length, t)}</h3>
+        { digidollarBlockFlag(blockTxs) }
         { blockTxs ? blockTxs.map(tx => txBox( { ...tx, status: txsStatus }, { openTx, tipHeight, t, spends }))
                    : loader() }
       </div>

@@ -1,4 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
+import { digidollarOutputRows } from './digidollar'
 import { formatOutAmount, linkToAddr, linkToParentAddr, formatNumber } from './util'
 
 const unspendable_types = [ 'op_return', 'provably_unspendable', 'fee' ]
@@ -54,6 +55,8 @@ const standard = (vout, { isOpen, spend, t, ...S }) => layout(
         <div className="mono">{data}</div>
       </div>)()
     }
+
+    { digidollarOutputRows(vout) }
 
     { vout.assetcommitment &&
       <div className="vout-body-row">
