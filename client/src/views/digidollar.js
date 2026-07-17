@@ -146,6 +146,28 @@ const firstParsed = info =>
   (info.metadata && info.metadata.find(m => m.valid)) ||
   (info.oracle_bundles && info.oracle_bundles.find(o => o.valid))
 
+export const getDigiDollarOutputSummary = vout => {
+  const info = vout && vout.digidollar
+  if (!info) return null
+
+  if (info.amount_cents != null) return {
+    type: displayType(info.tx_type) || 'activity',
+    label: `DD amount ${formatDigiDollarBadgeAmount(info.amount_cents)}`
+  }
+
+  if (info.price_micro_usd != null) return {
+    type: 'oracle',
+    label: `Oracle price ${formatOraclePrice(info.price_micro_usd)}`
+  }
+
+  return null
+}
+
+export const digidollarOutputSummary = vout => {
+  const summary = getDigiDollarOutputSummary(vout)
+  return summary && <span className={`digidollar-output-summary ${summary.type}`}>{summary.label}</span>
+}
+
 export const digidollarTxRows = tx => {
   const info = tx && tx.digidollar
   if (!info) return null

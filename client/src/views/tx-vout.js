@@ -1,5 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
-import { digidollarOutputRows } from './digidollar'
+import { digidollarOutputRows, digidollarOutputSummary } from './digidollar'
 import { formatOutAmount, linkToAddr, linkToParentAddr, formatNumber } from './util'
 
 const unspendable_types = [ 'op_return', 'provably_unspendable', 'fee' ]
@@ -23,13 +23,18 @@ const fee = (vout, { t, index, ...S }) => layout(vout, t`Transaction fees`, null
 
 const isUnblinded = vout => vout.valuecommitment != null && vout.value != null
 
+const withDigiDollarSummary = (desc, vout) => {
+  const summary = digidollarOutputSummary(vout)
+  return summary ? <span>{desc}<br/>{summary}</span> : desc
+}
+
 const standard = (vout, { isOpen, spend, t, ...S }) => layout(
   vout
 
-, vout.pegout ? (vout.pegout.scriptpubkey_address ? <span>{t`Peg-out to`}<br/>{linkToParentAddr(vout.pegout.scriptpubkey_address)}</span> : t`Peg-out`)
+, withDigiDollarSummary(vout.pegout ? (vout.pegout.scriptpubkey_address ? <span>{t`Peg-out to`}<br/>{linkToParentAddr(vout.pegout.scriptpubkey_address)}</span> : t`Peg-out`)
  : vout.scriptpubkey_address ? linkToAddr(vout.scriptpubkey_address)
  : vout.scriptpubkey_type ? vout.scriptpubkey_type.toUpperCase()
- : null
+ : null, vout)
 
 , isOpen && <div className="vout-body">
     { vout.scriptpubkey_type &&

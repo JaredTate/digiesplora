@@ -1498,6 +1498,25 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   word-break: break-word;
 }
 
+.digidollar-output-summary {
+  display: block;
+  margin-top: 4px;
+  color: #5fd68b !important;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 16px;
+  white-space: normal;
+}
+
+.digidollar-output-summary.oracle {
+  color: #45a6ff !important;
+}
+
+.digidollar-output-summary.burn {
+  color: #ff7d7d !important;
+}
+
 .details-btn {
   width: 200px;
   margin: 20px 30px;

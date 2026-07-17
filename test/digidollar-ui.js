@@ -6,6 +6,7 @@ import {
   getBlockDigiDollarTypes,
   getDigiDollarBadgeLabel,
   getDigiDollarLabel,
+  getDigiDollarOutputSummary,
 } from '../client/src/views/digidollar'
 
 assert.strictEqual(formatDigiDollarAmount(0), '$0.00 DD')
@@ -73,4 +74,23 @@ assert.deepStrictEqual(
     { type: 'transfer', amount_cents: 5000 },
     { type: 'oracle', amount_cents: null }
   ]
+)
+
+assert.deepStrictEqual(
+  getDigiDollarOutputSummary({
+    digidollar: { valid: true, tx_type: 'mint', amount_cents: 10000 }
+  }),
+  { type: 'mint', label: 'DD amount $100.00' }
+)
+assert.deepStrictEqual(
+  getDigiDollarOutputSummary({
+    digidollar: { valid: true, tx_type: 'transfer', amount_cents: 12345 }
+  }),
+  { type: 'transfer', label: 'DD amount $123.45' }
+)
+assert.deepStrictEqual(
+  getDigiDollarOutputSummary({
+    digidollar: { valid: true, kind: 'oracle_v03_bundle', price_micro_usd: 3283 }
+  }),
+  { type: 'oracle', label: 'Oracle price $0.003283/DGB' }
 )
