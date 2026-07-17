@@ -1,5 +1,10 @@
 import Snabbdom from 'snabbdom-pragma'
-import { digidollarOutputRows, digidollarOutputSummary } from './digidollar'
+import {
+  digidollarOutputRows,
+  digidollarOutputSummary,
+  formatDigiDollarAmount,
+  getDigiDollarOutputAddress,
+} from './digidollar'
 import { formatOutAmount, linkToAddr, linkToParentAddr, formatNumber } from './util'
 
 const unspendable_types = [ 'op_return', 'provably_unspendable', 'fee' ]
@@ -9,7 +14,7 @@ const layout = (vout, desc, body, { t, ...S }) =>
     <div className="vout-header">
       <div className="vout-header-container">
         <span>{ desc || t`Nonstandard` }</span>
-        <span className="amount">{formatOutAmount(vout, { t, ...S })}</span>
+        <span className="amount">{formatOutputAmount(vout, { t, ...S })}</span>
       </div>
     </div>
     { body }
@@ -17,7 +22,7 @@ const layout = (vout, desc, body, { t, ...S }) =>
 
 const isActive = (vout, { index, view, query, addr }) =>
    (view == 'tx' && query && !!query[`output:${index}`])
-|| (view == 'addr' && addr && vout.scriptpubkey_address == addr.address)
+|| (view == 'addr' && addr && (vout.scriptpubkey_address == addr.address || getDigiDollarOutputAddress(vout) == addr.address))
 
 const fee = (vout, { t, index, ...S }) => layout(vout, t`Transaction fees`, null, { t, index, ...S })
 
@@ -28,11 +33,18 @@ const withDigiDollarSummary = (desc, vout) => {
   return summary ? <span>{desc}<br/>{summary}</span> : desc
 }
 
+const formatOutputAmount = (vout, S) =>
+  vout.digidollar && vout.digidollar.valid && vout.digidollar.amount_cents != null
+    ? formatDigiDollarAmount(vout.digidollar.amount_cents)
+    : formatOutAmount(vout, S)
+
+const outputAddress = vout => getDigiDollarOutputAddress(vout) || vout.scriptpubkey_address
+
 const standard = (vout, { isOpen, spend, t, ...S }) => layout(
   vout
 
 , withDigiDollarSummary(vout.pegout ? (vout.pegout.scriptpubkey_address ? <span>{t`Peg-out to`}<br/>{linkToParentAddr(vout.pegout.scriptpubkey_address)}</span> : t`Peg-out`)
- : vout.scriptpubkey_address ? linkToAddr(vout.scriptpubkey_address)
+ : outputAddress(vout) ? linkToAddr(outputAddress(vout))
  : vout.scriptpubkey_type ? vout.scriptpubkey_type.toUpperCase()
  : null, vout)
 

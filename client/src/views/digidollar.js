@@ -178,6 +178,11 @@ export const digidollarOutputSummary = vout => {
   return summary && <span className={`digidollar-output-summary ${summary.type}`}>{summary.label}</span>
 }
 
+export const getDigiDollarOutputAddress = vout => {
+  const info = vout && vout.digidollar
+  return info && info.valid && info.dd_address ? info.dd_address : null
+}
+
 export const digidollarTxRows = tx => {
   const info = tx && tx.digidollar
   if (!info) return null
@@ -233,6 +238,7 @@ export const digidollarOutputRows = vout => {
 
   if (info.amount_cents != null) rows.push(row('DD amount', formatDigiDollarAmount(info.amount_cents)))
   if (info.amounts_cents) rows.push(row('DD outputs', info.amounts_cents.map(formatDigiDollarAmount).join(', ')))
+  rows.push(row('DD address', info.dd_address && <a href={`address/${info.dd_address}`}>{info.dd_address}</a>, 'mono digidollar-long'))
   rows.push(row('Lock height', info.lock_height))
   rows.push(row('Lock tier', info.lock_tier))
   rows.push(row('Owner x-only pubkey', info.owner_xonly_pubkey, 'mono digidollar-long'))

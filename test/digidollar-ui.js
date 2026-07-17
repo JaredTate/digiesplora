@@ -7,6 +7,7 @@ import {
   getBlockDigiDollarTxCount,
   getDigiDollarBadgeLabel,
   getDigiDollarLabel,
+  getDigiDollarOutputAddress,
   getDigiDollarOutputSummary,
 } from '../client/src/views/digidollar'
 
@@ -97,3 +98,14 @@ assert.deepStrictEqual(
   }),
   { type: 'oracle', label: 'Oracle price $0.003283/DGB' }
 )
+assert.strictEqual(
+  getDigiDollarOutputAddress({
+    digidollar: {
+      valid: true,
+      kind: 'token_output',
+      dd_address: 'DD1NQeCkofg1AyWvCWdki4N44Dihox91Xw8aYSotx7bb2cNaf6Aa'
+    }
+  }),
+  'DD1NQeCkofg1AyWvCWdki4N44Dihox91Xw8aYSotx7bb2cNaf6Aa'
+)
+assert.strictEqual(getDigiDollarOutputAddress({ digidollar: { valid: false } }), null)
