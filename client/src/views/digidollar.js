@@ -142,6 +142,16 @@ export const digidollarBlockTitleFlag = txs => {
   </span>
 }
 
+export const getBlockDigiDollarTxCount = block =>
+  block && block.digidollar_tx_count ? block.digidollar_tx_count : 0
+
+export const digidollarBlockTxCount = block => {
+  const count = getBlockDigiDollarTxCount(block)
+  return count > 0
+    ? <span className="digidollar-block-count">{count}</span>
+    : <span className="digidollar-block-count empty">0</span>
+}
+
 const firstParsed = info =>
   (info.metadata && info.metadata.find(m => m.valid)) ||
   (info.oracle_bundles && info.oracle_bundles.find(o => o.valid))

@@ -1019,6 +1019,11 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   width: 350px;
 }
 
+.blocks-table .blocks-table-row > div:nth-child(4) {
+  width: 90px;
+  text-align: center;
+}
+
 .blocks-table-row {
   color: #FFF !important;
 }
@@ -1515,6 +1520,29 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .digidollar-output-summary.burn {
   color: #ff7d7d !important;
+}
+
+.digidollar-block-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid #18a85f;
+  border-radius: 4px;
+  background: #0e5130;
+  color: #ffffff !important;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 16px;
+}
+
+.digidollar-block-count.empty {
+  border-color: transparent;
+  background: transparent;
+  color: #78838e !important;
 }
 
 .details-btn {

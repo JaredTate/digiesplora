@@ -4,6 +4,7 @@ import {
   formatOraclePrice,
   getBlockDigiDollarSummary,
   getBlockDigiDollarTypes,
+  getBlockDigiDollarTxCount,
   getDigiDollarBadgeLabel,
   getDigiDollarLabel,
   getDigiDollarOutputSummary,
@@ -75,6 +76,8 @@ assert.deepStrictEqual(
     { type: 'oracle', amount_cents: null }
   ]
 )
+assert.strictEqual(getBlockDigiDollarTxCount({ digidollar_tx_count: 2 }), 2)
+assert.strictEqual(getBlockDigiDollarTxCount({}), 0)
 
 assert.deepStrictEqual(
   getDigiDollarOutputSummary({

@@ -185,6 +185,18 @@ body.theme-light {
     color: #ffffff;
 }
 
+.theme-light .digidollar-block-count {
+    background-color: #0e5130;
+    border-color: #18a85f;
+    color: #ffffff !important;
+}
+
+.theme-light .digidollar-block-count.empty {
+    background-color: transparent;
+    border-color: transparent;
+    color: #78838e !important;
+}
+
 .theme-light .digidollar-block-flag {
     color: #34444f;
     background-color: #eefaf6;
