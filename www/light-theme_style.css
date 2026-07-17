@@ -132,9 +132,9 @@ body.theme-light {
 }
 
 .theme-light .digidollar-badge.transfer {
-    background-color: #e9f4ff;
-    border-color: #267fc8;
-    color: #14527f !important;
+    background-color: #e9f8ef;
+    border-color: #2d9b57;
+    color: #146336 !important;
 }
 
 .theme-light .digidollar-badge.burn {
@@ -150,14 +150,14 @@ body.theme-light {
 }
 
 .theme-light .digidollar-badge.activity {
-    background-color: #fff6d8;
-    border-color: #a56a00;
-    color: #4f3300 !important;
+    background-color: #ffffff;
+    border-color: #18a85f;
+    color: #0e5130 !important;
 }
 
 .theme-light .digidollar-badge.activity .digidollar-mark {
-    background-color: #a56a00;
-    color: #fff7df;
+    background-color: #18a85f;
+    color: #ffffff;
 }
 
 .theme-light .digidollar-title-separator {
@@ -173,8 +173,16 @@ body.theme-light {
     color: #ffffff !important;
 }
 
+.theme-light .page-title-with-dd .digidollar-badge.title.activity > span:not(.digidollar-mark) {
+    color: #0e5130 !important;
+}
+
 .theme-light .page-title-with-dd .digidollar-badge.title .digidollar-mark {
     color: #07131a;
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title.activity .digidollar-mark {
+    color: #ffffff;
 }
 
 .theme-light .digidollar-block-flag {

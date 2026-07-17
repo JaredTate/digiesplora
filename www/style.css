@@ -1345,13 +1345,13 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 .digidollar-badge.transfer {
-  background: #10293a;
-  border-color: #62b5ff;
-  color: #e0f3ff !important;
+  background: #102d22;
+  border-color: #5fd68b;
+  color: #dcffe8 !important;
 }
 
 .digidollar-badge.transfer .digidollar-mark {
-  background: #62b5ff;
+  background: #5fd68b;
 }
 
 .digidollar-badge.burn {
@@ -1375,14 +1375,14 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 .digidollar-badge.activity {
-  background: #1f1a08;
-  border-color: #ffd166;
-  color: #fff4c2 !important;
+  background: #ffffff;
+  border-color: #18a85f;
+  color: #0e5130 !important;
 }
 
 .digidollar-badge.activity .digidollar-mark {
-  background: #ffd166;
-  color: #241800;
+  background: #18a85f;
+  color: #ffffff;
 }
 
 .digidollar-badge.title {
@@ -1415,15 +1415,24 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   color: #ffffff !important;
 }
 
+.page-title-with-dd .digidollar-badge.title.activity > span:not(.digidollar-mark) {
+  color: #0e5130 !important;
+}
+
 .page-title-with-dd .digidollar-badge.title .digidollar-mark {
   height: 21px;
   min-width: 30px;
   color: #07131a;
 }
 
+.page-title-with-dd .digidollar-badge.title.activity .digidollar-mark {
+  color: #ffffff;
+}
+
 .page-title-with-dd .digidollar-badge.title.activity {
-  background: #12283f;
-  border-color: #009de0;
+  background: #ffffff;
+  border-color: #18a85f;
+  color: #0e5130 !important;
 }
 
 .page-title-with-dd .digidollar-badge.title.mint {
@@ -1437,8 +1446,8 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 .page-title-with-dd .digidollar-badge.title.transfer {
-  background: #0a4f86;
-  border-color: #1187c1;
+  background: #0e5130;
+  border-color: #18a85f;
 }
 
 .page-title-with-dd .digidollar-badge.title.burn {
