@@ -149,14 +149,19 @@ body.theme-light {
     color: #0b4e86 !important;
 }
 
-.theme-light .digidollar-title-separator {
-    color: #25323d;
+.theme-light .digidollar-badge.activity {
+    background-color: #fff6d8;
+    border-color: #a56a00;
+    color: #4f3300 !important;
 }
 
-.theme-light .digidollar-activity-label {
-    background-color: #f7fcff;
-    border-color: #236fb2;
-    color: #0f2f4f;
+.theme-light .digidollar-badge.activity .digidollar-mark {
+    background-color: #a56a00;
+    color: #fff7df;
+}
+
+.theme-light .digidollar-title-separator {
+    color: #25323d;
 }
 
 .theme-light .digidollar-block-flag {

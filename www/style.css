@@ -1299,22 +1299,6 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   line-height: 1;
 }
 
-.digidollar-activity-label {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 4px 9px;
-  border: 1px solid #4cc9a7;
-  border-radius: 4px;
-  background: #0d2a31;
-  color: #eafaff;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 16px;
-  white-space: nowrap;
-}
-
 .digidollar-badge {
   display: inline-flex;
   align-items: center;
@@ -1388,6 +1372,17 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .digidollar-badge.oracle .digidollar-mark {
   background: #45a6ff;
+}
+
+.digidollar-badge.activity {
+  background: #1f1a08;
+  border-color: #ffd166;
+  color: #fff4c2 !important;
+}
+
+.digidollar-badge.activity .digidollar-mark {
+  background: #ffd166;
+  color: #241800;
 }
 
 .digidollar-badge.title {

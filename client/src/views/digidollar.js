@@ -79,7 +79,7 @@ export const digidollarBlockTitleFlag = txs => {
   const types = getBlockDigiDollarTypes(txs)
   return types.length && <span className="digidollar-title-group block-dd-activity">
     <span className="digidollar-title-separator">-</span>
-    <span className="digidollar-activity-label">DD Activity</span>
+    {typeBadge('activity', 'Activity', 'title')}
     {types.map(type => typeBadge(type, titleCase(type), 'title compact'))}
   </span>
 }
