@@ -1019,6 +1019,11 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   width: 350px;
 }
 
+.blocks-table .blocks-table-row > div:nth-child(4) {
+  width: 90px;
+  text-align: center;
+}
+
 .blocks-table-row {
   color: #FFF !important;
 }
@@ -1274,6 +1279,270 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 .transaction-box > .header a {
   font-size: 16px;
   font-weight: 600;
+}
+
+.page-title-with-dd {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  line-height: 1.15;
+}
+
+.digidollar-title-group {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.digidollar-title-separator {
+  color: #d9e8ee;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.digidollar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  max-width: 100%;
+  min-height: 24px;
+  margin-left: 12px;
+  padding: 3px 8px 3px 4px;
+  border: 1px solid #4cc9a7;
+  border-radius: 4px;
+  background: #102b26;
+  color: #b9ffea !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  vertical-align: middle;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(76, 201, 167, 0.08);
+}
+
+.digidollar-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: #4cc9a7;
+  color: #071815;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.digidollar-badge.mint {
+  background: #102d22;
+  border-color: #5fd68b;
+  color: #dcffe8 !important;
+}
+
+.digidollar-badge.mint .digidollar-mark {
+  background: #5fd68b;
+}
+
+.digidollar-badge.transfer {
+  background: #102d22;
+  border-color: #5fd68b;
+  color: #dcffe8 !important;
+}
+
+.digidollar-badge.transfer .digidollar-mark {
+  background: #5fd68b;
+}
+
+.digidollar-badge.burn {
+  background: #351e22;
+  border-color: #ff7d7d;
+  color: #ffe3e3 !important;
+}
+
+.digidollar-badge.burn .digidollar-mark {
+  background: #ff7d7d;
+}
+
+.digidollar-badge.oracle {
+  background: #0d2744;
+  border-color: #45a6ff;
+  color: #e3f3ff !important;
+}
+
+.digidollar-badge.oracle .digidollar-mark {
+  background: #45a6ff;
+}
+
+.digidollar-badge.activity {
+  background: #ffffff;
+  border-color: #18a85f;
+  color: #0e5130 !important;
+}
+
+.digidollar-badge.activity .digidollar-mark {
+  background: #18a85f;
+  color: #ffffff;
+}
+
+.digidollar-badge.title {
+  min-height: 28px;
+  margin-left: 0;
+  padding: 4px 10px 4px 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.digidollar-badge.title .digidollar-mark {
+  height: 20px;
+}
+
+.page-title-with-dd .digidollar-badge.title {
+  min-height: 30px;
+  padding: 5px 12px 5px 5px;
+  border: 2px solid #061b2d;
+  background: #07131a;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 18px;
+  box-shadow: 0 4px 10px rgba(7, 19, 26, 0.18);
+  text-shadow: none;
+}
+
+.page-title-with-dd .digidollar-badge.title > span:not(.digidollar-mark) {
+  color: #ffffff !important;
+}
+
+.page-title-with-dd .digidollar-badge.title.activity > span:not(.digidollar-mark) {
+  color: #0e5130 !important;
+}
+
+.page-title-with-dd .digidollar-badge.title .digidollar-mark {
+  height: 21px;
+  min-width: 30px;
+  color: #07131a;
+}
+
+.page-title-with-dd .digidollar-badge.title.activity .digidollar-mark {
+  color: #ffffff;
+}
+
+.page-title-with-dd .digidollar-badge.title.activity {
+  background: #ffffff;
+  border-color: #18a85f;
+  color: #0e5130 !important;
+}
+
+.page-title-with-dd .digidollar-badge.title.mint {
+  background: #0e5130;
+  border-color: #18a85f;
+}
+
+.page-title-with-dd .digidollar-badge.title.oracle {
+  background: #0a4f86;
+  border-color: #1187c1;
+}
+
+.page-title-with-dd .digidollar-badge.title.transfer {
+  background: #0e5130;
+  border-color: #18a85f;
+}
+
+.page-title-with-dd .digidollar-badge.title.burn {
+  background: #7c1d1d;
+  border-color: #d44747;
+}
+
+.digidollar-badge.compact {
+  min-height: 20px;
+  margin-left: 0;
+  padding: 2px 7px 2px 3px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.digidollar-badge.compact .digidollar-mark {
+  min-width: 22px;
+  height: 16px;
+  font-size: 10px;
+}
+
+.digidollar-block-flag {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 9px 11px;
+  border: 1px solid rgba(76, 201, 167, 0.32);
+  border-left: 4px solid #4cc9a7;
+  border-radius: 6px;
+  background: rgba(76, 201, 167, 0.08);
+  color: #d9e8ee;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.digidollar-block-flag strong {
+  margin-right: 2px;
+}
+
+.digidollar-row > div:first-child {
+  color: #9aa7b2 !important;
+}
+
+.digidollar-long {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.digidollar-output-summary {
+  display: block;
+  margin-top: 4px;
+  color: #5fd68b !important;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 16px;
+  white-space: normal;
+}
+
+.digidollar-output-summary.oracle {
+  color: #45a6ff !important;
+}
+
+.digidollar-output-summary.burn {
+  color: #ff7d7d !important;
+}
+
+.digidollar-block-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid #18a85f;
+  border-radius: 4px;
+  background: #0e5130;
+  color: #ffffff !important;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 16px;
+}
+
+.digidollar-block-count.empty {
+  border-color: transparent;
+  background: transparent;
+  color: #78838e !important;
 }
 
 .details-btn {

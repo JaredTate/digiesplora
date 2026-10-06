@@ -119,6 +119,91 @@ body.theme-light {
     border: 1px solid #dcdcdc;
 }
 
+.theme-light .digidollar-badge {
+    background-color: #e7f7f1;
+    border-color: #2c9a7d;
+    color: #12634f !important;
+}
+
+.theme-light .digidollar-badge.mint {
+    background-color: #e9f8ef;
+    border-color: #2d9b57;
+    color: #146336 !important;
+}
+
+.theme-light .digidollar-badge.transfer {
+    background-color: #e9f8ef;
+    border-color: #2d9b57;
+    color: #146336 !important;
+}
+
+.theme-light .digidollar-badge.burn {
+    background-color: #fff0f0;
+    border-color: #c94444;
+    color: #8d2525 !important;
+}
+
+.theme-light .digidollar-badge.oracle {
+    background-color: #e7f3ff;
+    border-color: #236fb2;
+    color: #0b4e86 !important;
+}
+
+.theme-light .digidollar-badge.activity {
+    background-color: #ffffff;
+    border-color: #18a85f;
+    color: #0e5130 !important;
+}
+
+.theme-light .digidollar-badge.activity .digidollar-mark {
+    background-color: #18a85f;
+    color: #ffffff;
+}
+
+.theme-light .digidollar-title-separator {
+    color: #25323d;
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title {
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(7, 19, 26, 0.18);
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title > span:not(.digidollar-mark) {
+    color: #ffffff !important;
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title.activity > span:not(.digidollar-mark) {
+    color: #0e5130 !important;
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title .digidollar-mark {
+    color: #07131a;
+}
+
+.theme-light .page-title-with-dd .digidollar-badge.title.activity .digidollar-mark {
+    color: #ffffff;
+}
+
+.theme-light .digidollar-block-count {
+    background-color: #0e5130;
+    border-color: #18a85f;
+    color: #ffffff !important;
+}
+
+.theme-light .digidollar-block-count.empty {
+    background-color: transparent;
+    border-color: transparent;
+    color: #78838e !important;
+}
+
+.theme-light .digidollar-block-flag {
+    color: #34444f;
+    background-color: #eefaf6;
+    border-color: #b9e4d7;
+    border-left-color: #2c9a7d;
+}
+
 .theme-light .transaction-box > .ins-and-outs > .vins > div:not(.vin-loading), .theme-light .transaction-box > .ins-and-outs .vouts > div:not(.vin-loading) {
     background-color: #fff;
     border: 1px solid #dcdcdc;

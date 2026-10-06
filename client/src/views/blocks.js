@@ -1,4 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
+import { digidollarBlockTxCount } from './digidollar'
 import { formatTime, formatNumber, formatBlockNumber } from './util'
 import loader from '../components/loading'
 
@@ -14,6 +15,7 @@ export const blks = (blocks, viewMore, loadMore, { t, loading, ...S }) =>
         <div className="blocks-table-cell font-h4">{t`Height`}</div>
         <div className="blocks-table-cell font-h4">{process.browser ? t`Timestamp` : t`Timestamp (UTC)`}</div>
         <div className="blocks-table-cell font-h4">{t`Transactions`}</div>
+        <div className="blocks-table-cell font-h4">{t`DD TXs`}</div>
         <div className="blocks-table-cell font-h4">{t`Size (KB)`}</div>
         <div className="blocks-table-cell font-h4">{t`Weight (KWU)`}</div>
       </div>
@@ -23,6 +25,7 @@ export const blks = (blocks, viewMore, loadMore, { t, loading, ...S }) =>
           <div className="blocks-table-cell highlighted-text font-p2" data-label={t`Height`}>{formatBlockNumber(b.height)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Timestamp`}>{formatTime(b.timestamp, false)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Transactions`}>{formatNumber(b.tx_count)}</div>
+          <div className="blocks-table-cell font-p2" data-label={t`DD TXs`}>{digidollarBlockTxCount(b)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Size (KB)`}>{formatNumber(b.size/1000)}</div>
           <div className="blocks-table-cell font-p2" data-label={t`Weight (KWU)`}>{formatNumber(b.weight/1000)}</div>
         </a>
