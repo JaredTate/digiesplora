@@ -3164,3 +3164,10 @@ h3.table-title {
   margin: 0;
   opacity: 0.8;
 }
+
+/* small phones (360-399 px): a smaller title keeps logo, title and link on one row */
+@media only screen and (max-width: 399px) {
+  .site-title h1 {
+    font-size: 1.3rem;
+  }
+}
