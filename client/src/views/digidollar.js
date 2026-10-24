@@ -129,7 +129,7 @@ export const getBlockDigiDollarSummary = txs => {
 
 export const digidollarBlockTitleFlag = txs => {
   const summary = getBlockDigiDollarSummary(txs)
-  return summary.length && <span className="digidollar-title-group block-dd-activity">
+  return summary.length > 0 && <span className="digidollar-title-group block-dd-activity">
     <span className="digidollar-title-separator">-</span>
     {typeBadge('activity', 'Activity', 'title')}
     {summary.map(({ type, amount_cents }) =>

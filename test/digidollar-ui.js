@@ -9,7 +9,9 @@ import {
   getDigiDollarLabel,
   getDigiDollarOutputAddress,
   getDigiDollarOutputSummary,
+  digidollarBlockTitleFlag,
 } from '../client/src/views/digidollar'
+import toHTML from 'snabbdom-to-html'
 
 assert.strictEqual(formatDigiDollarAmount(0), '$0.00 DD')
 assert.strictEqual(formatDigiDollarAmount(12345), '$123.45 DD')
@@ -109,3 +111,14 @@ assert.strictEqual(
   'DD1NQeCkofg1AyWvCWdki4N44Dihox91Xw8aYSotx7bb2cNaf6Aa'
 )
 assert.strictEqual(getDigiDollarOutputAddress({ digidollar: { valid: false } }), null)
+
+// B4: a block with no DigiDollar activity must not render a stray "0" in its title
+const titleFlag = digidollarBlockTitleFlag([{}, {}])
+assert.ok(titleFlag !== 0, 'block title flag renders a stray 0 for blocks without DigiDollar activity')
+assert.ok(!titleFlag, 'block title flag should render nothing without DigiDollar activity')
+assert.ok(!digidollarBlockTitleFlag(null))
+// ... and a block with activity still renders its badges
+const flagHtml = toHTML(digidollarBlockTitleFlag([
+  { digidollar: { tx_type: 'mint', metadata: [{ valid: true, tx_type: 'mint', amount_cents: 10000 }] } }
+]))
+assert.ok(flagHtml.includes('Activity') && flagHtml.includes('Mint $100.00'), flagHtml)
