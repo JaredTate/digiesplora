@@ -1208,6 +1208,14 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
   word-break: break-word;
 }
 
+/* Address page balance row (FIRST-TIMER-8) */
+.stats-table > div.addr-balance {
+  font-size: 1.2em;
+}
+.stats-table > div.addr-balance strong {
+  font-weight: 700;
+}
+
 .stats-table ul, .stats-table ul > li:last-child {
   margin-bottom: 0;
 }

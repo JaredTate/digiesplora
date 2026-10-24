@@ -24,6 +24,9 @@ export const formatTime = (unix, with_tz = true) => {
 
 export const formatSat = (sats, label=nativeAssetLabel) => `${formatNumber(sat2btc(sats), NATIVE_PRECISION)} ${label}`
 
+// Address balance in DGB, always with 8 decimals, e.g. "99.77000000 DGB" (FIRST-TIMER-8)
+export const formatBalance = sats => formatSat(Number.isFinite(sats) ? sats : 0)
+
 export const formatAssetAmount = (value, precision=0, t) =>
   <span>
     {formatNumber(precision > 0 ? moveDec(value, -precision) : value, precision)}

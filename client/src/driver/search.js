@@ -1,11 +1,13 @@
 import request from 'superagent'
 import { tryUnconfidentialAddress, isHash256 } from '../util'
 import { Observable as O } from '../rxjs'
+import { isValidSearchAddress, NOT_DGB_ADDRESS } from '../lib/dgb-address'
 
 const reNumber  = /^\d+$/
     , reAddrLike = /^([a-km-zA-HJ-NP-Z1-9]{26,35}|[a-km-zA-HJ-NP-Z1-9]{80}|[a-z]{2,5}1[ac-hj-np-z02-9]{8,100}|[A-Z]{2,5}1[AC-HJ-NP-Z02-9]{8,100})$/
     , reShortTxOut = /^(\d+)([x:])(\d+)\2(\d+)$/
     , trim = s => s.trim()
+    , maxHeight = 4294967295 // block heights are 32-bit
 
 export const stripUri = s => s.replace(/^(?:digibyte|bitcoin|liquidnetwork):([^?]+).*/i, '$1')
 
@@ -16,13 +18,14 @@ export default apiBase => {
 
   let matches
 
-  // Accepts a stream of query strings, returns a stream of found resource paths
+  // Accepts a stream of query strings, returns a stream of found resource paths,
+  // null when nothing was found, or { error } with a message for the user
   return query$ =>
     O.from(query$).map(trim).map(stripUri).flatMap(async query =>
 
     // if its a number, assume its a block height without checking
       reNumber.test(query)
-    ? `/block-height/${query}`
+    ? (+query <= maxHeight ? `/block-height/${query}` : { error: 'No block at that height.' })
 
     // if its a 256 bit hash, look it up as a txid or block hash
     : isHash256(query)
@@ -41,8 +44,11 @@ export default apiBase => {
         .catch(_ => null)
 
     // lookup as address if it resembles one
+    // (but say so right away if it is not a DigiByte address, e.g. a Bitcoin one)
     : reAddrLike.test(query)
-    ? tryResource(`/address/${tryUnconfidentialAddress(query)}`)
+    ? !isValidSearchAddress(tryUnconfidentialAddress(query))
+      ? { error: NOT_DGB_ADDRESS }
+      : tryResource(`/address/${tryUnconfidentialAddress(query)}`)
         // use the user-provided address and not the (potentially) unconfidential one
         .then(_ => `/address/${query}`)
         .catch(_ => null)

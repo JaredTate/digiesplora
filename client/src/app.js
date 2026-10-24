@@ -8,6 +8,7 @@ import { nativeAssetId, blockTxsPerPage, blocksPerPage } from './const'
 import { dbg, combine, extractErrors, dropErrors, last, updateQuery, notNully, processGoAddr, parseHashes, isHash256, makeAddressQR, tickWhileFocused, tickWhileViewing, onNewTipWhileViewing, updateBlocks } from './util'
 import l10n, { defaultLang } from './l10n'
 import { pageMeta } from './lib/seo'
+import { isValidSearchAddress, NOT_DGB_ADDRESS } from './lib/dgb-address'
 import * as views from './views'
 
 if (process.browser) {
@@ -40,6 +41,9 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
     , last_txids: parseHashes(loc.query.txids)
     , est_chain_seen_count: +loc.query.c || 0
     })).map(processGoAddr)
+  // addresses that are not DigiByte addresses are rejected without an API call (WEIRD-INPUT-1)
+  , goValidAddr$ = goAddr$.filter(d => isValidSearchAddress(d.addr))
+  , goBadAddr$   = goAddr$.filter(d => !isValidSearchAddress(d.addr))
   , goTx$     = route('/tx/:txid').map(loc => loc.params.txid).filter(isHash256)
   , goPush$   = route('/tx/push')
   , goRecent$ = route('/tx/recent')
@@ -99,7 +103,8 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
   /// Model
 
   , error$ = extractErrors(HTTP.select().filter(r$ => !r$.request.bg))
-      .merge(searchResult$.filter(found => !found).mapTo('No results found'))
+      .merge(searchResult$.filter(found => !found || found.error).map(found => found ? found.error : 'No results found'))
+      .merge(goBadAddr$.mapTo(NOT_DGB_ADDRESS))
 
   , tipHeight$ = reply('tip-height', true).map(res => +res.text)
 
@@ -283,7 +288,7 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
     , goTx$.map(txid        => ({ category: 'tx',         method: 'GET', path: `/tx/${txid}` }))
 
     // fetch address and its txs
-    , goAddr$.flatMap(d     => [{ category: 'address',    method: 'GET', path: `/address/${d.addr}` }
+    , goValidAddr$.flatMap(d => [{ category: 'address',    method: 'GET', path: `/address/${d.addr}` }
                               , d.last_txids.length
                               ? { category: 'addr-txs',   method: 'GET', path: `/address/${d.addr}/txs/chain/${last(d.last_txids)}` }
                               : { category: 'addr-txs',   method: 'GET', path: `/address/${d.addr}/txs` }])
@@ -375,7 +380,7 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
 
   // Route navigation sink
   , navto$ = O.merge(
-      searchResult$.filter(Boolean).map(result => ({ type: 'replace', ...result }))
+      searchResult$.filter(result => result && !result.error).map(result => ({ type: 'replace', ...result }))
     , byHeight$.map(hash => ({ type: 'replace', pathname: `/block/${hash}` }))
     , pushedtx$.map(txid => ({ type: 'push', pathname: `/tx/${txid}` }))
     , updateQuery$.map(([ pathname, hash, qs ]) => ({ type: 'replace', pathname, hash, search: qs, state: { noRouting: true } }))

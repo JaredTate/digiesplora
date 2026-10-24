@@ -6,7 +6,7 @@
     "prerender-server": "cd prerender-server && npm start",
     "postinstall": "(cd client && npm install) && (cd prerender-server && npm install)",
     "dist": "./build.sh",
-    "test": "node test/seo.js && babel-node test/digidollar-ui.js && babel-node test/client-ui.js",
+    "test": "node test/seo.js && babel-node test/digidollar-ui.js && babel-node test/client-ui.js && babel-node test/address-ui.js",
     "test:smoke": "node test/smoke.js",
     "test:seo": "node test/seo.js",
     "l10n:fetch": "./lang/util/fetch-transifex.sh",

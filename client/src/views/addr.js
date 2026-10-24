@@ -3,7 +3,7 @@ import { last } from '../util'
 import layout from './layout'
 import search from './search'
 import { txBox } from './tx'
-import { formatSat, formatNumber } from './util'
+import { formatSat, formatNumber, formatBalance } from './util'
 import { addrTxsPerPage as perPage, maxMempoolTxs } from '../const'
 import loader from '../components/loading'
 
@@ -59,6 +59,13 @@ export default ({ t, addr, addrQR, addrTxs, goAddr, openTx, spends, tipHeight, l
       </div>
       <div className="container">
         <div className="stats-table font-p2">
+          <div className="addr-balance">
+            <div>{t`Balance`}</div>
+            <div>
+              <strong>{formatBalance(total_utxo_sum)}</strong>
+              { mempool_utxo_sum != 0 && <span className="text-gray"> ({t`includes`} {formatSat(mempool_utxo_sum)} {t`unconfirmed`})</span> }
+            </div>
+          </div>
         { is_confidential && [
           <div>
             <div>{ t`Confidential` }</div>
