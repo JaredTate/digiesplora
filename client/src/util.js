@@ -128,6 +128,11 @@ export const tickWhileFocused = ms =>
 export const tickWhileViewing = (ms, view, view$) =>
   tickWhileFocused(ms).withLatestFrom(view$).filter(([ _, shown_view ]) => shown_view == view)
 
+// Emit when the tip height changes while `view` is the active view.
+// The first tip value is skipped, because the view fetches its data when it opens.
+export const onNewTipWhileViewing = (view, tipHeight$, view$) =>
+  tipHeight$.distinctUntilChanged().skip(1).withLatestFrom(view$).filter(([ _, shown_view ]) => shown_view == view)
+
 const responseError = res => ({
   status: res.status,
   message: (res.body && Object.keys(res.body).length)

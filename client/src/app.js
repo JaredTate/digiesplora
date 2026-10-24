@@ -5,7 +5,7 @@ import {setAdapt} from '@cycle/run/lib/adapt';
 import { getMempoolDepth, getConfEstimate, calcSegwitFeeGains } from './lib/fees'
 import getPrivacyAnalysis from './lib/privacy-analysis'
 import { nativeAssetId, blockTxsPerPage, blocksPerPage } from './const'
-import { dbg, combine, extractErrors, dropErrors, last, updateQuery, notNully, processGoAddr, parseHashes, isHash256, makeAddressQR, tickWhileFocused, tickWhileViewing, updateBlocks } from './util'
+import { dbg, combine, extractErrors, dropErrors, last, updateQuery, notNully, processGoAddr, parseHashes, isHash256, makeAddressQR, tickWhileFocused, tickWhileViewing, onNewTipWhileViewing, updateBlocks } from './util'
 import l10n, { defaultLang } from './l10n'
 import * as views from './views'
 
@@ -340,6 +340,9 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
 
     , goHome$.flatMap(_ =>  [{ category: 'blocks',    method: 'GET', path: '/blocks' }
                               , { category: 'recent',    method: 'GET', path: '/mempool/recent' }])
+    // ... and refresh the latest blocks in the background when a new block arrives while the dashBoard is open
+    , onNewTipWhileViewing('dashBoard', tipHeight$, view$)
+        .mapTo(                 { category: 'blocks',    method: 'GET', path: '/blocks', bg: true })
     //
     // elements/liquid only
     //
