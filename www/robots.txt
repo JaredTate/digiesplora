@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /nojs/
+
+Sitemap: https://digiexplorer.info/sitemap.xml

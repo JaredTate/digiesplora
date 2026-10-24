@@ -120,7 +120,14 @@ function testProductionBuild() {
                      'img/favicon.png', 'instascan.min.js']) {
       assert.ok(fs.existsSync(path.join(dest, f)), `dist is missing ${f}`)
     }
-    assert.match(fs.readFileSync(path.join(dest, 'index.html'), 'utf8'), /src="app\.js"/)
+    const html = fs.readFileSync(path.join(dest, 'index.html'), 'utf8')
+    assert.match(html, /src="app\.js"/)
+    // Search engines: a title and description that say DigiByte, plus a sitemap.
+    assert.match(html, /<title>DigiExplorer - DigiByte Block Explorer<\/title>/)
+    assert.match(html, /<meta name="description" content="[^"]*DigiByte \(DGB\)[^"]*"/)
+    assert.match(fs.readFileSync(path.join(dest, 'robots.txt'), 'utf8'), /^Sitemap: https:\/\/digiexplorer\.info\/sitemap\.xml$/m)
+    const sitemap = fs.readFileSync(path.join(dest, 'sitemap.xml'), 'utf8')
+    for (const u of ['/', '/blocks/recent', '/mempool']) assert.ok(sitemap.includes(`<loc>https://digiexplorer.info${u}</loc>`), `sitemap is missing ${u}`)
     const app = fs.readFileSync(path.join(dest, 'app.js'), 'utf8')
     checkBundle(app, 'dist app.js')
     ok(`build.sh produced a static site (app.js ${app.length} bytes)`)

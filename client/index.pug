@@ -1,6 +1,6 @@
 doctype html
 
-- baseTitle = process.env.SITE_TITLE || 'Block Explorer'
+- baseTitle = process.env.SITE_TITLE || 'DigiExplorer - DigiByte Block Explorer'
 - staticRoot = process.env.STATIC_ROOT || ''
 - pageTitle = prerender_title ? `${prerender_title} · ${baseTitle}` : baseTitle
 - bodyClass = theme ? `theme-${theme}` : ''
@@ -13,7 +13,7 @@ head
   meta(charset='utf-8')
   title= pageTitle
   meta(property='og:title', content=process.env.OG_TITLE || process.env.SITE_TITLE || 'DigiExplorer')
-  meta(name='description', content=process.env.SITE_DESC || 'DigiByte Block Explorer')
+  meta(name='description', content=process.env.SITE_DESC || 'Search the DigiByte (DGB) blockchain: blocks, transactions, addresses and the mempool. Free and open source.')
 
   if canon_url
     link(rel="canonical", href=canon_url)
