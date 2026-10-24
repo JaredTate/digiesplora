@@ -1,8 +1,9 @@
 // Smoke / characterization test for the explorer frontend.
 // It proves that:
-//   1. the dev-server (what Box 2 runs today) starts and serves the main pages, app.js and CSS;
+//   1. the dev-server starts and serves the main pages, app.js and CSS;
 //   2. the same frontend works behind an nginx-like /api proxy against a live API;
-//   3. the production build (build.sh -> static dist/) succeeds.
+//   3. the production build (build.sh -> static dist/) succeeds. Box 2 serves that build
+//      (scripts/deploy-box2.sh), so this check is the deploy gate.
 // Run: npm run test:smoke   (SMOKE_OFFLINE=1 skips the live API checks; SMOKE_API sets the API)
 const assert = require('assert')
 const vm = require('vm')
