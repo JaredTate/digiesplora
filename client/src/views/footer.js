@@ -46,7 +46,7 @@ export default ({ t, page }) =>
           { process.env.TERMS && <span><a href={ process.env.TERMS } target="_blank">Terms &amp; </a></span> }
           { process.env.PRIVACY && <span><a href={ process.env.PRIVACY } target="_blank">Privacy</a></span> }
           </div>
-          <div>{ process.env.SITE_FOOTER || t`Copyright © 2025 DigiByte Developers. Released under MIT license. All rights reserved. Powered by DigiEsplora` }</div>
+          <div>{ process.env.SITE_FOOTER || t`Copyright © ${new Date().getFullYear()} DigiByte Developers. Released under MIT license. All rights reserved. Powered by DigiEsplora` }</div>
         </div>
       </div>
     </div>
