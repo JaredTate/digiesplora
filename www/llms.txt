@@ -1,0 +1,46 @@
+# DigiExplorer - DigiByte Block Explorer
+
+> DigiExplorer (https://digiexplorer.info) is a free, open-source block explorer for the DigiByte (DGB) blockchain. It shows blocks, transactions, addresses and the mempool, with data read live from a DigiByte full node. It also has a public JSON REST API (Esplora-compatible) at https://digiexplorer.info/api/.
+
+## Main pages
+
+- [Home](https://digiexplorer.info/): latest blocks and transactions, and a search box for a block height, block hash, transaction ID or address.
+- [Recent blocks](https://digiexplorer.info/blocks/recent): the newest DigiByte blocks with height, time, transaction count and size.
+- [Mempool](https://digiexplorer.info/mempool): unconfirmed DigiByte transactions and their fee rates.
+- [Recent transactions](https://digiexplorer.info/tx/recent): the newest DigiByte transactions.
+
+## URL patterns
+
+- [Block by hash](https://digiexplorer.info/block/4da631f2ac1bed857bd968c67c913978274d8aabed64ab2bcebc1665d7f4d3a0): `https://digiexplorer.info/block/<hash>` - one block and its transactions (this example is block 1).
+- [Block by height](https://digiexplorer.info/block-height/1): `https://digiexplorer.info/block-height/<n>` - redirects to the block at height n.
+- [Transaction](https://digiexplorer.info/tx/dd8a4a3b8ecdc14e4142ffb73a5b0c8801030f98dbd818f1b90ac3683b4f2c60): `https://digiexplorer.info/tx/<txid>` - inputs, outputs, fee and confirmation status.
+- [Address](https://digiexplorer.info/address/DK8ZTp89aahJpmnwdZ8LNsAUNoGA6qS43G): `https://digiexplorer.info/address/<address>` - balance and transaction history.
+- [Search](https://digiexplorer.info/search?q=1): `https://digiexplorer.info/search?q=<query>` - opens the matching block, transaction or address.
+
+## REST API
+
+Base URL: https://digiexplorer.info/api/ . Responses are JSON or plain text. Amounts are in satoshis (1 DGB = 100,000,000 satoshis). Full reference: the Esplora HTTP API.
+
+- [Tip height](https://digiexplorer.info/api/blocks/tip/height): `GET /api/blocks/tip/height` - height of the newest block (plain text).
+- [Tip hash](https://digiexplorer.info/api/blocks/tip/hash): `GET /api/blocks/tip/hash` - hash of the newest block (plain text).
+- [Recent blocks](https://digiexplorer.info/api/blocks): `GET /api/blocks[/:start_height]` - the 10 newest blocks, or 10 blocks from start_height down.
+- [Block hash by height](https://digiexplorer.info/api/block-height/1): `GET /api/block-height/:height` - the block hash at a height (plain text).
+- [Block](https://digiexplorer.info/api/block/4da631f2ac1bed857bd968c67c913978274d8aabed64ab2bcebc1665d7f4d3a0): `GET /api/block/:hash` - block header data; also `/status` and `/txs[/:start_index]`.
+- [Transaction](https://digiexplorer.info/api/tx/dd8a4a3b8ecdc14e4142ffb73a5b0c8801030f98dbd818f1b90ac3683b4f2c60): `GET /api/tx/:txid` - a transaction; also `/status`, `/hex` and `/outspends`.
+- [Address](https://digiexplorer.info/api/address/DK8ZTp89aahJpmnwdZ8LNsAUNoGA6qS43G): `GET /api/address/:address` - address totals; also `/txs` for its transaction history.
+- [Mempool](https://digiexplorer.info/api/mempool): `GET /api/mempool` - mempool size, total fee and fee histogram.
+- [Fee estimates](https://digiexplorer.info/api/fee-estimates): `GET /api/fee-estimates` - fee rate estimates by confirmation target.
+- [API reference](https://github.com/JaredTate/digiesplora/blob/master/API.md): every endpoint and the JSON formats.
+
+## About
+
+- DigiExplorer is free to use and open source under the MIT license: [source code](https://github.com/JaredTate/digiesplora). It is a fork of Blockstream Esplora.
+- DigiByte is a decentralized, open-source blockchain. There is no company behind it.
+- [DigiByte.io](https://digibyte.io): DigiByte blockchain statistics.
+- [DigiHash](https://digihash.digibyte.io): a DigiByte mining pool.
+
+## Data notes
+
+- All data comes live from a DigiByte mainnet full node. New blocks appear about every 15 seconds.
+- Pages are built in the browser with JavaScript. For machine use, prefer the REST API above.
+- Transaction and block pages have stable URLs; the newest-block and mempool pages change constantly.

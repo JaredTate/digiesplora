@@ -1,4 +1,113 @@
+# robots.txt for https://digiexplorer.info - DigiExplorer, the DigiByte block explorer.
+# Search engines and AI crawlers are welcome. /nojs/ is the old no-JavaScript
+# prerender path; it is kept out of every group (a named group replaces *).
+
 User-agent: *
+Allow: /
+Disallow: /nojs/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /nojs/
+
+User-agent: GoogleOther
+Allow: /
+Disallow: /nojs/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Applebot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /nojs/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /nojs/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /nojs/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /nojs/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /nojs/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /nojs/
+
+User-agent: CCBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /nojs/
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /nojs/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /nojs/
+
+User-agent: MistralAI-User
+Allow: /
+Disallow: /nojs/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /nojs/
+
+User-agent: YouBot
+Allow: /
 Disallow: /nojs/
 
 Sitemap: https://digiexplorer.info/sitemap.xml

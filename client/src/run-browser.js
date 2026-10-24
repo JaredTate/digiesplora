@@ -9,13 +9,13 @@ import makeScanDriver from './driver/instascan'
 import { Observable as O } from './rxjs'
 
 import main from './app'
+import { applyMeta } from './lib/seo'
 
 const apiBase = (process.env.API_URL || '/api').replace(/\/+$/, '')
     , webBase = process.env.BASE_HREF || '/'
-    , initTitle = process.browser ? document.title : process.env.SITE_TITLE
 
-const titleDriver = title$ => O.from(title$)
-  .subscribe(title => document.title = title ? `${title} · ${initTitle}` : initTitle)
+// Sets <title>, description, canonical, og:url, robots and page JSON-LD for each route
+const titleDriver = meta$ => O.from(meta$).subscribe(meta => applyMeta(document, meta))
 
 const blindingDriver = process.env.IS_ELEMENTS
   ? require('./driver/blinding')

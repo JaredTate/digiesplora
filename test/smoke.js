@@ -110,6 +110,121 @@ async function testDevServer() {
   }
 }
 
+// Search engines and AI crawlers (see test/seo.js for the per-route titles/canonicals).
+const SITE = 'https://digiexplorer.info'
+const INDEXNOW_KEY = '261e39d143d43afd6f4680a984cb1e39'
+const CRAWLERS = ['Googlebot', 'Google-Extended', 'GoogleOther', 'Bingbot', 'Applebot', 'Applebot-Extended',
+  'DuckDuckBot', 'DuckAssistBot', 'YandexBot', 'Baiduspider', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',
+  'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'anthropic-ai', 'PerplexityBot', 'Perplexity-User',
+  'CCBot', 'meta-externalagent', 'FacebookBot', 'Amazonbot', 'MistralAI-User', 'cohere-ai', 'YouBot']
+
+const attr = (html, re) => { const m = html.match(re); return m && m[1] }
+const metaContent = (html, key) =>
+  attr(html, new RegExp(`<meta (?:property|name)="${key.replace(/[.:]/g, '\\$&')}" content="([^"]*)"`))
+
+// Parse robots.txt into groups: [{ agents: [...], rules: [[field, value], ...] }]
+function parseRobots(txt) {
+  const groups = [], sitemaps = []
+  let cur = null, lastWasAgent = false
+  txt.split(/\r?\n/).forEach((raw, i) => {
+    const line = raw.replace(/#.*/, '').trim()
+    if (!line) return
+    const m = line.match(/^([A-Za-z-]+)\s*:\s*(.*)$/)
+    assert.ok(m, `robots.txt line ${i + 1} is not "field: value": ${raw}`)
+    const field = m[1].toLowerCase(), value = m[2]
+    assert.ok(['user-agent', 'allow', 'disallow', 'sitemap', 'crawl-delay'].includes(field), `robots.txt unknown field ${m[1]}`)
+    if (field === 'sitemap') return sitemaps.push(value)
+    if (field === 'user-agent') {
+      if (!lastWasAgent) groups.push(cur = { agents: [], rules: [] })
+      cur.agents.push(value); lastWasAgent = true
+    } else {
+      assert.ok(cur, `robots.txt rule before any User-agent (line ${i + 1})`)
+      cur.rules.push([field, value]); lastWasAgent = false
+    }
+  })
+  return { groups, sitemaps }
+}
+
+function checkSeoBuild(dest, html, app) {
+  const read = f => fs.readFileSync(path.join(dest, f), 'utf8')
+
+  // <head>: language, OG and Twitter cards
+  assert.match(html, /<html lang="en"/, 'index.html has no <html lang="en">')
+  for (const k of ['og:title', 'og:description', 'og:image', 'og:site_name', 'og:type', 'twitter:card', 'twitter:title', 'twitter:description', 'twitter:image'])
+    assert.ok(metaContent(html, k), `index.html is missing ${k}`)
+  assert.strictEqual(metaContent(html, 'og:site_name'), 'DigiExplorer')
+  assert.strictEqual(metaContent(html, 'twitter:card'), 'summary_large_image')
+  assert.strictEqual(metaContent(html, 'og:image'), `${SITE}/img/og-image.png`)
+  assert.strictEqual(metaContent(html, 'twitter:image'), `${SITE}/img/og-image.png`)
+  const png = fs.readFileSync(path.join(dest, 'img/og-image.png'))
+  assert.strictEqual(png.toString('hex', 1, 4), '504e47', 'og-image.png is not a PNG')
+  assert.deepStrictEqual([png.readUInt32BE(16), png.readUInt32BE(20)], [1200, 630], 'og-image.png is not 1200x630')
+  const desc = metaContent(html, 'description')
+  assert.ok(desc.length >= 70 && desc.length <= 160, `meta description length ${desc.length}`)
+  // One index.html serves every route, so a static canonical/og:url would be wrong on inner pages.
+  // The app sets them per route at runtime (client/src/lib/seo.js).
+  assert.ok(!/rel="canonical"/.test(html), 'static index.html must not hard-code a canonical')
+  assert.ok(!/og:url/.test(html), 'static index.html must not hard-code og:url')
+  assert.ok(app.includes('rel') && app.includes('canonical') && app.includes('ld-page'), 'app.js does not set canonical / page JSON-LD')
+  ok('index.html has lang, OG/Twitter tags and a 1200x630 og-image.png')
+
+  // JSON-LD WebSite + SearchAction (the app handles /search?q=)
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]))
+  const site = blocks.find(b => b['@type'] === 'WebSite')
+  assert.ok(site, 'no WebSite JSON-LD')
+  assert.strictEqual(site['@context'], 'https://schema.org')
+  assert.strictEqual(site.url, `${SITE}/`)
+  assert.strictEqual(site.name, 'DigiExplorer')
+  const action = [].concat(site.potentialAction)[0]
+  assert.strictEqual(action['@type'], 'SearchAction')
+  assert.strictEqual(action.target.urlTemplate || action.target, `${SITE}/search?q={search_term_string}`)
+  assert.strictEqual(action['query-input'], 'required name=search_term_string')
+  ok('JSON-LD WebSite with SearchAction parses')
+
+  // Crawlable text for bots that do not run JavaScript, inside the app root (the app replaces it)
+  const root = attr(html, /<div id="explorer">([\s\S]*?)<\/div><script/)
+  assert.ok(root, 'cannot find #explorer root content')
+  assert.strictEqual((html.match(/<h1[ >]/g) || []).length, 1, 'index.html must have exactly one <h1>')
+  assert.match(root, /<h1>DigiExplorer – DigiByte Block Explorer<\/h1>/)
+  assert.match(root, /blocks, transactions and addresses on the DigiByte blockchain/)
+  assert.match(root, /open source/)
+  assert.match(root, /DigiByte full node/)
+  for (const href of ['/blocks/recent', '/mempool', 'https://digibyte.io', 'https://digihash.digibyte.io'])
+    assert.ok(root.includes(`href="${href}"`), `crawl text is missing a link to ${href}`)
+  assert.ok(!/display:\s*none|visibility:\s*hidden/.test(root), 'crawl text must not be hidden')
+  ok('static crawl text (h1, facts, links) is inside #explorer')
+
+  // robots.txt: * plus one group per crawler, each keeps Disallow: /nojs/
+  const robots = parseRobots(read('robots.txt'))
+  for (const ua of ['*', ...CRAWLERS]) {
+    const g = robots.groups.find(g => g.agents.includes(ua))
+    assert.ok(g, `robots.txt has no group for ${ua}`)
+    assert.strictEqual(g.agents.length, 1, `${ua} should have its own group`)
+    assert.ok(g.rules.some(([f, v]) => f === 'allow' && v === '/'), `${ua} group lacks Allow: /`)
+    assert.ok(g.rules.some(([f, v]) => f === 'disallow' && v === '/nojs/'), `${ua} group lacks Disallow: /nojs/`)
+  }
+  assert.deepStrictEqual(robots.sitemaps, [`${SITE}/sitemap.xml`])
+  assert.match(read('robots.txt'), /Sitemap: https:\/\/digiexplorer\.info\/sitemap\.xml\s*$/, 'Sitemap should be the last line')
+  ok(`robots.txt is valid: * + ${CRAWLERS.length} crawler groups, each with Disallow: /nojs/, plus Sitemap`)
+
+  // llms.txt (llmstxt.org format) with absolute links only
+  const llms = read('llms.txt')
+  assert.match(llms, /^# DigiExplorer/)
+  assert.match(llms, /^> .{80,}/m, 'llms.txt needs a > summary line')
+  assert.match(llms, /^## /m)
+  const links = [...llms.matchAll(/\]\(([^)]+)\)/g)].map(m => m[1])
+  assert.ok(links.length >= 10, `llms.txt has only ${links.length} links`)
+  for (const l of links) assert.match(l, /^https:\/\//, `llms.txt link is not absolute: ${l}`)
+  for (const p of ['/block/', '/block-height/', '/tx/', '/address/', '/blocks/recent', '/mempool', '/api/blocks/tip/height'])
+    assert.ok(llms.includes(SITE + p), `llms.txt does not mention ${SITE}${p}`)
+  assert.ok(!/\b(token|price|invest|guarantee|world's first)\b/i.test(llms), 'llms.txt uses banned wording')
+  ok(`llms.txt has a summary, sections and ${links.length} absolute links`)
+
+  // IndexNow key file: the whole body is the key
+  assert.strictEqual(read(`${INDEXNOW_KEY}.txt`), INDEXNOW_KEY)
+  ok('IndexNow key file body equals the key')
+}
+
 function testProductionBuild() {
   console.log('# production build (build.sh)')
   const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'esplora-dist-'))
@@ -131,12 +246,15 @@ function testProductionBuild() {
     const app = fs.readFileSync(path.join(dest, 'app.js'), 'utf8')
     checkBundle(app, 'dist app.js')
     ok(`build.sh produced a static site (app.js ${app.length} bytes)`)
+    checkSeoBuild(dest, html, app)
   } finally {
     fs.rmSync(dest, { recursive: true, force: true })
   }
 }
 
 ;(async () => {
+  console.log('# per-route titles and canonicals (test/seo.js)')
+  ok(`seo unit tests (${require('./seo').run()} groups, incl. 220-path fuzz)`)
   await testDevServer()
   testProductionBuild()
   console.log(`\n${passed} checks passed`)

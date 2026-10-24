@@ -1,42 +1,80 @@
 doctype html
 
 - baseTitle = process.env.SITE_TITLE || 'DigiExplorer - DigiByte Block Explorer'
+- siteUrl = process.env.SITE_URL || 'https://digiexplorer.info'
+- siteDesc = process.env.SITE_DESC || 'Search the DigiByte (DGB) blockchain: blocks, transactions, addresses and the mempool. Free and open source.'
+- ogImage = siteUrl + '/img/og-image.png'
 - staticRoot = process.env.STATIC_ROOT || ''
-- pageTitle = prerender_title ? `${prerender_title} · ${baseTitle}` : baseTitle
+//- prerender_title is already a full "Page – DigiExplorer" title (client/src/lib/seo.js)
+- pageTitle = prerender_title || baseTitle
 - bodyClass = theme ? `theme-${theme}` : ''
 
 - cssPath = t ? t`style.css` : 'style.css'
 - lang = t ? t.lang_id : 'en'
 - dir = t ? t`ltr` : 'ltr'
 
-head
-  meta(charset='utf-8')
-  title= pageTitle
-  meta(property='og:title', content=process.env.OG_TITLE || process.env.SITE_TITLE || 'DigiExplorer')
-  meta(name='description', content=process.env.SITE_DESC || 'Search the DigiByte (DGB) blockchain: blocks, transactions, addresses and the mempool. Free and open source.')
+//- One index.html serves every route, so there is no static canonical or og:url here:
+//- the app sets the title, description, canonical, og:url and page JSON-LD per route.
+- websiteLd = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': siteUrl + '/#website', url: siteUrl + '/', name: 'DigiExplorer', alternateName: 'DigiByte Block Explorer', description: siteDesc, inLanguage: 'en', isAccessibleForFree: true, publisher: { '@type': 'Organization', name: 'DigiByte Developers' }, potentialAction: { '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: siteUrl + '/search?q={search_term_string}' }, 'query-input': 'required name=search_term_string' } }
 
-  if canon_url
-    link(rel="canonical", href=canon_url)
+html(lang=lang)
+  head
+    meta(charset='utf-8')
+    title= pageTitle
+    meta(name='description', content=siteDesc)
 
-  if !noscript && process.env.NOSCRIPT_REDIR
-    noscript: meta(http-equiv='refresh', content="0; url='?nojs'")
+    meta(property='og:type', content='website')
+    meta(property='og:site_name', content='DigiExplorer')
+    meta(property='og:title', content=process.env.OG_TITLE || pageTitle)
+    meta(property='og:description', content=siteDesc)
+    meta(property='og:image', content=ogImage)
+    meta(property='og:image:width', content='1200')
+    meta(property='og:image:height', content='630')
+    meta(property='og:image:alt', content='DigiExplorer - DigiByte Block Explorer')
+    meta(name='twitter:card', content='summary_large_image')
+    meta(name='twitter:title', content=process.env.OG_TITLE || pageTitle)
+    meta(name='twitter:description', content=siteDesc)
+    meta(name='twitter:image', content=ogImage)
 
-  base(href=process.env.BASE_HREF || '/')
+    if canon_url
+      link(rel="canonical", href=canon_url)
 
-  meta(name='viewport', content='width=device-width, initial-scale=1')
-  link(rel='shortcut icon', type='image/png', href=staticRoot+'img/favicon.png')
-  link(rel='stylesheet', href=staticRoot+'bootstrap.min.css')
-  link(rel='stylesheet', href=staticRoot+cssPath)
+    if !noscript && process.env.NOSCRIPT_REDIR
+      noscript: meta(http-equiv='refresh', content="0; url='?nojs'")
 
-  if process.env.CANONICAL_URL
-    //- open search requires the absolute URL of the explorer
-    link(rel='search', href=staticRoot+'opensearch.xml', type='application/opensearchdescription+xml', title=process.env.SITE_TITLE || 'DigiByte Explorer')
+    base(href=process.env.BASE_HREF || '/')
 
-  != process.env.HEAD_HTML
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon', type='image/png', href=staticRoot+'img/favicon.png')
+    link(rel='stylesheet', href=staticRoot+'bootstrap.min.css')
+    link(rel='stylesheet', href=staticRoot+cssPath)
 
-body(class=bodyClass, lang=lang, dir=dir)
-  #explorer!= prerender_html || ''
+    if process.env.CANONICAL_URL
+      //- open search requires the absolute URL of the explorer
+      link(rel='search', href=staticRoot+'opensearch.xml', type='application/opensearchdescription+xml', title=process.env.SITE_TITLE || 'DigiByte Explorer')
 
-  if !noscript
-    script(src=staticRoot+'app.js', async)
-  != process.env.FOOT_HTML
+    script(type='application/ld+json')!= JSON.stringify(websiteLd).replace(/</g, '\\u003c')
+
+    != process.env.HEAD_HTML
+
+  body(class=bodyClass, lang=lang, dir=dir)
+    //- Crawlable text for bots that do not run JavaScript. The app replaces the
+    //- contents of #explorer when it starts. The prerender server (/nojs/) fills it instead.
+    if prerender_html
+      #explorer!= prerender_html
+    else
+      #explorer
+        .seo-intro.container
+          h1 DigiExplorer – DigiByte Block Explorer
+          p.
+            Search blocks, transactions and addresses on the DigiByte blockchain.
+            DigiExplorer is free and open source, and its data comes live from a DigiByte full node.
+          ul
+            li: a(href='/blocks/recent') Recent DigiByte blocks
+            li: a(href='/mempool') DigiByte mempool
+            li: a(href='https://digibyte.io') DigiByte blockchain stats (digibyte.io)
+            li: a(href='https://digihash.digibyte.io') DigiHash DigiByte mining pool
+
+    if !noscript
+      script(src=staticRoot+'app.js', async)
+    != process.env.FOOT_HTML

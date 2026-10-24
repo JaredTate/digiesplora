@@ -3150,16 +3150,21 @@ h3.table-title {
   padding-left: 30px;
 }
 
-.site-title h1 {
+.site-title h1,
+.site-title .site-title-name {
   color: #0066cc; /* White text over the #0066cc nav */
+  font-family: inherit;
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
   line-height: 1.2;
 }
 
-.site-title h2 {
+.site-title h2,
+.site-title .site-title-tagline {
   color: #0066cc;
+  font-weight: 500;
+  line-height: 1.2;
   font-size: 1rem;
   margin: 0;
   opacity: 0.8;
@@ -3167,7 +3172,37 @@ h3.table-title {
 
 /* small phones (360-399 px): a smaller title keeps logo, title and link on one row */
 @media only screen and (max-width: 399px) {
-  .site-title h1 {
+  .site-title h1,
+  .site-title .site-title-name {
     font-size: 1.3rem;
   }
+}
+
+/* Static intro inside #explorer for crawlers and visitors without JavaScript.
+   The app replaces it as soon as it starts. It fades in after 1s so visitors
+   with JavaScript do not see it flash before the app renders. */
+.seo-intro {
+  padding: 48px 16px;
+  max-width: 720px;
+  animation: seo-intro-in .3s ease-in 1s both;
+}
+.seo-intro h1 {
+  color: #0066cc;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.seo-intro p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+.seo-intro ul {
+  padding-left: 20px;
+}
+.seo-intro li {
+  margin: 6px 0;
+}
+@keyframes seo-intro-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

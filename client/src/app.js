@@ -7,6 +7,7 @@ import getPrivacyAnalysis from './lib/privacy-analysis'
 import { nativeAssetId, blockTxsPerPage, blocksPerPage } from './const'
 import { dbg, combine, extractErrors, dropErrors, last, updateQuery, notNully, processGoAddr, parseHashes, isHash256, makeAddressQR, tickWhileFocused, tickWhileViewing, onNewTipWhileViewing, updateBlocks } from './util'
 import l10n, { defaultLang } from './l10n'
+import { pageMeta } from './lib/seo'
 import * as views from './views'
 
 if (process.browser) {
@@ -240,16 +241,13 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
       .combineLatest(isReady$, loading$, (view, isReady, loading) =>
         !isReady ? 'loading' : view || (loading ? 'loading' : 'notFound'))
 
-  // Page title
-  , title$ = O.merge(page$.mapTo(null)
-                   , block$.filter(notNully).withLatestFrom(t$, (block, t) => t`Block #${block.height}: ${block.id}`)
-                   , tx$.filter(notNully).withLatestFrom(t$, (tx, t) => t`Transaction: ${tx.txid}`)
-                   , addr$.filter(notNully).withLatestFrom(goAddr$, t$, (_, goAddr, t) => t`Address: ${goAddr.display_addr}`)
-                   , asset$.filter(notNully).withLatestFrom(t$, (asset, t) => t`Asset: ${asset.asset_id}`)
-                   , goAssetList$.withLatestFrom(t$, (_, t) => t`Registered assets`)
-                   , goPush$.withLatestFrom(t$, (_, t) => t`Broadcast transaction`)
-                   , goMempool$.withLatestFrom(t$, (_, t) => t`Mempool`)
-                   , goRecent$.withLatestFrom(t$, (_, t) => t`Recent transactions`))
+  // Page title, description, canonical URL and page JSON-LD, per route (see lib/seo.js)
+  // Recomputed on every view change, so a brief 'notFound' while data loads does not stick.
+  , meta$ = O.merge(page$.map(loc => pageMeta(loc.pathname))
+                  , view$.filter(notNully).withLatestFrom(page$, block$.startWith(null), tx$.startWith(null)
+                      , (view, loc, block, tx) => pageMeta(loc.pathname, { view, block, tx })))
+      .distinctUntilChanged((a, b) => JSON.stringify(a) == JSON.stringify(b))
+  , title$ = meta$.map(meta => meta.title)
 
   // App state
   , state$ = combine({ t$, error$, tipHeight$, spends$
@@ -444,7 +442,7 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
   , storage: store$
   , search: goSearch$
   , scanner: scanning$
-  , title: title$
+  , title: meta$
   , state: state$
 
   // elements only
