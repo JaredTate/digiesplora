@@ -3108,6 +3108,18 @@ h3.table-title {
   .main-nav li a, .sub-nav a {
     font-size: 16px;
   }
+  /* the 50px desktop gap makes the nav row wider than a phone screen */
+  .sub-nav {
+    gap: 0;
+    align-self: stretch;
+  }
+  /* tighter header row so logo, title and link fit */
+  .nav-container .site-title {
+    padding-left: 10px;
+  }
+  .main-nav li {
+    margin-right: 0;
+  }
 }
 
 @media only screen and (max-width: 345px) {
