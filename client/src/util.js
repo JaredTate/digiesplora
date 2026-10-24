@@ -8,7 +8,7 @@ import { nativeAssetId } from './const'
 const BLIND_PREFIX = +process.env.BLIND_PREFIX || 0x0c
     , reHash256 = /^[a-f0-9]{64}$/i
     , reBech32 = /^[a-z]{1,83}1[ac-hj-np-z02-9]{6,100}$/
-    , qrPrefix = process.env.IS_ELEMENTS ? 'liquidnetwork' : 'bitcoin'
+    , qrPrefix = process.env.IS_ELEMENTS ? 'liquidnetwork' : 'digibyte'
 
 // not null or undefined
 export const notNully = x => x != null
@@ -87,8 +87,10 @@ export const processGoAddr =
       return { ...goAddr, addr, display_addr, confidential_addr }
     }
 
+export const addressURI = addr => `${qrPrefix}:${addr}`
+
 export const makeAddressQR = addr => {
-  let qrstr = `${qrPrefix}:${addr}`
+  let qrstr = addressURI(addr)
   return qrcode.toDataURL(
     // upper-case bech32 addresses to enable the compact qr encoding mode
     reBech32.test(addr) ? qrstr.toUpperCase() : qrstr
