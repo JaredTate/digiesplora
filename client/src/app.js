@@ -8,7 +8,7 @@ import { nativeAssetId, blockTxsPerPage, blocksPerPage } from './const'
 import { dbg, combine, extractErrors, dropErrors, last, updateQuery, notNully, processGoAddr, parseHashes, isHash256, makeAddressQR, tickWhileFocused, tickWhileViewing, onNewTipWhileViewing, updateBlocks } from './util'
 import l10n, { defaultLang } from './l10n'
 import { pageMeta } from './lib/seo'
-import { isValidSearchAddress, NOT_DGB_ADDRESS } from './lib/dgb-address'
+import { isValidSearchAddress, badAddressMessage } from './lib/dgb-address'
 import * as views from './views'
 
 if (process.browser) {
@@ -71,7 +71,8 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
   // three ways to search: via the form, using the short /<query> search URL and using the QR scanner.
   // this triggers a redirect to /search?q=<query>, which then triggers the search itself.
   , searchQuery$ = O.merge(
-      on('.search', 'submit').map(e => e.target.querySelector('[name=q]').value)
+      // preventDefault: a native form submit reloads the page and empties the box (FIRST-TIMER-11)
+      on('.search', 'submit', { preventDefault: true }).map(e => e.target.querySelector('[name=q]').value)
     , route('/:q([a-zA-Z0-9]+)').map(loc => loc.params.q).filter(q => !reservedPaths.includes(q))
     , scan$
     )
@@ -104,7 +105,7 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
 
   , error$ = extractErrors(HTTP.select().filter(r$ => !r$.request.bg))
       .merge(searchResult$.filter(found => !found || found.error).map(found => found ? found.error : 'No results found'))
-      .merge(goBadAddr$.mapTo(NOT_DGB_ADDRESS))
+      .merge(goBadAddr$.map(d => badAddressMessage(d.addr)))
 
   , tipHeight$ = reply('tip-height', true).map(res => +res.text)
 

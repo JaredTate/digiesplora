@@ -55,7 +55,7 @@ export default ({ t, asset, assetTxs, goAsset, openTx, spends, tipHeight, loadin
           <div className="block-hash">
             <span>{asset.asset_id}</span>
             { process.browser && <div className="code-button">
-              <div className="code-button-btn" role="button" data-clipboardCopy={asset.asset_id}></div>
+              <button type="button" className="code-button-btn" aria-label={t`Copy to clipboard`} data-clipboardCopy={asset.asset_id}></button>
             </div> }
           </div>
         </div>

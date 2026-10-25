@@ -1,4 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
+import { hintLabel } from './hints'
 import layout from './layout'
 import { txBox } from './tx'
 import { digidollarBlockTitleFlag } from './digidollar'
@@ -23,7 +24,7 @@ export default ({ t, block: b, blockStatus: status, blockTxs, openTx, spends, op
           </h1>
           <div className="block-hash font-p1"><span className="text-gray">{b.id}</span>
             { process.browser && <div className="code-button">
-              <div className="code-button-btn" role="button" data-clipboardCopy={b.id}></div>
+              <button type="button" className="code-button-btn" aria-label={t`Copy to clipboard`} data-clipboardCopy={b.id}></button>
             </div> }
           </div>
           <div className="prev-next-blocks-btns font-h5">
@@ -64,7 +65,7 @@ export default ({ t, block: b, blockStatus: status, blockTxs, openTx, spends, op
           <div>{!status ? '' : !status.in_best_chain ? t`Orphaned` : tipHeight ? t`In best chain (${tipHeight-b.height+1} confirmations)` : t`In best chain`}</div>
         </div>
         <div>
-          <div>{t`Timestamp`}</div>
+          {hintLabel(t, 'Timestamp')}
           <div>{formatTime(b.timestamp)}</div>
         </div>
         <div>
@@ -72,11 +73,11 @@ export default ({ t, block: b, blockStatus: status, blockTxs, openTx, spends, op
           <div>{`${formatNumber(b.size/1000)} KB`}</div>
         </div>
         <div>
-          <div>{t`Virtual size`}</div>
+          {hintLabel(t, 'Virtual size')}
           <div>{`${Math.ceil(b.weight/4/1000)} vKB`}</div>
         </div>
         <div>
-          <div>{t`Weight units`}</div>
+          {hintLabel(t, 'Weight units')}
           <div>{`${formatNumber(b.weight/1000)} KWU`}</div>
         </div>
 
@@ -88,22 +89,22 @@ export default ({ t, block: b, blockStatus: status, blockTxs, openTx, spends, op
               <div className="mono">{formatHex(b.version)}</div>
             </div>
           , <div>
-              <div>{t`Merkle root`}</div>
+              {hintLabel(t, 'Merkle root')}
               <div className="mono">{b.merkle_root}</div>
             </div>
 
           /* PoW chains */
           , b.bits ? [
               <div>
-                <div>{t`Bits`}</div>
+                {hintLabel(t, 'Bits')}
                 <div className="mono">{formatHex(b.bits)}</div>
               </div>
             , <div>
-                <div>{t`Difficulty`}</div>
+                {hintLabel(t, 'Difficulty')}
                 <div className="mono">{formatNumber(b.difficulty)}</div>
               </div>
             , <div>
-                <div>{t`Nonce`}</div>
+                {hintLabel(t, 'Nonce')}
                 <div className="mono">{formatHex(b.nonce)}</div>
               </div>
             ]

@@ -1,4 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
+import { hintLabel } from './hints'
 import layout from './layout'
 import search from './search'
 import vinView from './tx-vin'
@@ -39,7 +40,7 @@ export default ({ t, tx, tipHeight, spends, openTx, page, unblinded, ...S }) => 
           <div className="block-hash font-p1">
             <span className="text-gray">{tx.txid}</span>
             { process.browser && <div className="code-button">
-              <div className="code-button-btn" role="button" data-clipboardCopy={tx.txid}></div>
+              <button type="button" className="code-button-btn" aria-label={t`Copy to clipboard`} data-clipboardCopy={tx.txid}></button>
             </div> }
           </div>
         </div>
@@ -115,7 +116,7 @@ const txHeader = (tx, { tipHeight, mempool, feeEst, t
   return (
   <div className="stats-table font-p2">
     <div>
-      <div>{t`Status`}</div>
+      {hintLabel(t, 'Status')}
       <div>{confirmationText(tx.status, tipHeight, t)}</div>
     </div>
     {tx.status.confirmed && [
@@ -128,7 +129,7 @@ const txHeader = (tx, { tipHeight, mempool, feeEst, t
         <div>{tx.status.block_height}</div>
       </div>
     , <div>
-        <div>{t`Block timestamp`}</div>
+        {hintLabel(t, 'Block timestamp')}
         <div>{formatTime(tx.status.block_time)}</div>
       </div>
     ]}
@@ -142,11 +143,11 @@ const txHeader = (tx, { tipHeight, mempool, feeEst, t
     </div> }
 
     { feerate != null && <div>
-      <div>{t`Transaction fees`}</div>
+      {hintLabel(t, 'Transaction fees')}
       <div>
         <span className="amount">{t`${formatSat(tx.fee)} (${feerate.toFixed(1)} sat/vB)`}</span>
         { overpaying > OVERPAYMENT_WARN &&
-          <p className={`text-${ overpaying > OVERPAYMENT_WARN*1.5 ? 'danger' : 'warning' } mb-0`} title={t`compared to bitcoind's suggested fee of ${feeEst[2].toFixed(1)} sat/vB for confirmation within 2 blocks`}>
+          <p className={`text-${ overpaying > OVERPAYMENT_WARN*1.5 ? 'danger' : 'warning' } mb-0`} title={t`compared to the DigiByte node's suggested fee of ${feeEst[2].toFixed(1)} sat/vB for confirmation within 2 blocks`}>
             ⓘ {t`overpaying by ${Math.round((overpaying-1)*100)}%`}
           </p>
         }
@@ -158,11 +159,11 @@ const txHeader = (tx, { tipHeight, mempool, feeEst, t
       <div>{`${formatNumber(tx.size)} B`}</div>
     </div>
     <div>
-      <div>{t`Virtual size`}</div>
+      {hintLabel(t, 'Virtual size')}
       <div>{`${formatNumber(Math.ceil(tx.weight/4))} vB`}</div>
     </div>
     <div>
-      <div>{t`Weight units`}</div>
+      {hintLabel(t, 'Weight units')}
       <div>{`${formatNumber(tx.weight)} WU`}</div>
     </div>
     <div>
@@ -171,21 +172,21 @@ const txHeader = (tx, { tipHeight, mempool, feeEst, t
     </div>
     { digidollarTxRows(tx) }
     <div>
-      <div>{t`Lock time`}</div>
+      {hintLabel(t, 'Lock time')}
       <div>{tx.locktime}</div>
     </div>
     { isRbf(tx) && <div>
-      <div>{t`Replace by fee`}</div>
+      {hintLabel(t, 'Replace by fee')}
       <div>{t`Opted in`}</div>
     </div> }
 
     { !!(segwitGains.realizedGains || segwitGains.potentialBech32Gains) && <div>
-      <div>{t`SegWit fee savings`}</div>
+      {hintLabel(t, 'SegWit fee savings')}
       <div className="py-2 small-sm">{segwitGainsView(segwitGains, t)}</div>
     </div> }
 
     <div>
-      <div>{t`Privacy analysis`}</div>
+      {hintLabel(t, 'Privacy analysis')}
       <div className="py-2 small-sm">{privacyAnalysisView(privacyAnalysis, t)}</div>
     </div>
 

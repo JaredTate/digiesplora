@@ -47,12 +47,12 @@ export default ({ t, addr, addrQR, addrTxs, goAddr, openTx, spends, tipHeight, l
               <div className="block-hash font-p1">
                 <span className="text-gray">{display_addr}</span>
                 { process.browser && <div className="code-button">
-                  <div className="code-button-btn" role="button" data-clipboardCopy={display_addr}></div>
+                  <button type="button" className="code-button-btn" aria-label={t`Copy to clipboard`} data-clipboardCopy={display_addr}></button>
                 </div> }
               </div>
             </div>
             {show_qr && <div className="col-sm-4">
-              <img className="float-sm-right address-qr-code" src={ addrQR } />
+              <img className="float-sm-right address-qr-code" src={ addrQR } alt={t`QR code for this address`} />
             </div>}
           </div>
         </div>

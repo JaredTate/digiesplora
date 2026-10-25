@@ -6,7 +6,7 @@ const ownHeading = [ 'block', 'tx', 'addr', 'mempool', 'pushtx', 'error', 'notFo
 
 export default S =>
   <nav className="container nav-container">
-    <a className="navbar-brand" href="."></a>
+    <a className="navbar-brand" href="." aria-label="DigiExplorer home"></a>
     <div className="site-title">
       { ownHeading.includes(S.view)
         ? <div className="site-title-name">DigiExplorer</div>

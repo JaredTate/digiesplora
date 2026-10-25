@@ -47,6 +47,10 @@ html(lang=lang)
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='shortcut icon', type='image/png', href=staticRoot+'img/favicon.png')
     link(rel='stylesheet', href=staticRoot+'bootstrap.min.css')
+    //- These two were @import-ed from style.css: linking them here saves a round trip (SLOW-4).
+    //- They stay before style.css so the cascade is unchanged.
+    link(rel='stylesheet', href=staticRoot+'font/inconsolata/index.css')
+    link(rel='stylesheet', href=staticRoot+'light-theme_style.css')
     link(rel='stylesheet', href=staticRoot+cssPath)
 
     if process.env.CANONICAL_URL

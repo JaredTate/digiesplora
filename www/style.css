@@ -1,14 +1,16 @@
-@import url("font/inconsolata/index.css");
-@import url("light-theme_style.css");
-
+/* Fonts: small latin woff2 subsets (made with fonttools pyftsubset), TTF as fallback.
+   font-display: swap shows text in a system font at once instead of hiding it while the font loads (SLOW-4).
+   The Inconsolata and light-theme sheets are <link>ed from index.pug, not @import-ed (one round trip less). */
 @font-face {
   font-family: Inter;
-  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-display: swap;
+  src: url("font/Inter-latin.woff2") format("woff2"), url("font/Inter-VariableFont_opsz,wght.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Chakra Petch";
-  src: url("font/ChakraPetch-Bold.ttf") format("opentype");
+  font-display: swap;
+  src: url("font/ChakraPetch-Bold-latin.woff2") format("woff2"), url("font/ChakraPetch-Bold.ttf") format("truetype");
 }
 
 .hide {
@@ -581,7 +583,7 @@ table th, table td {
 
 table th {
   border-top: none !important;
-  color: #78838e;
+  color: #5f6b76; /* 5.4:1 on white (FIRST-TIMER-19) */
   text-transform: uppercase;
 }
 
@@ -628,7 +630,12 @@ table th {
 }
 
 .search-bar .qrcode-link {
-  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  margin-right: 10px;
 }
 
 .page-search-bar {
@@ -650,9 +657,13 @@ table th {
 }
 
 .code-button .code-button-btn {
-  height: 23px;
-  width: 30px;
-  background: url(img/icons/copy.png) no-repeat;
+  /* 44x44 tap area around the 30x23 icon; the negative margin keeps the line height (SLOW-8) */
+  height: 44px;
+  width: 44px;
+  margin: -10px -7px;
+  padding: 0;
+  border: 0;
+  background: url(img/icons/copy.png) no-repeat center;
 }
 
 .code-button .code-button-btn img {
@@ -960,7 +971,7 @@ table th {
 
 /* HEADER END */
 
-body > .container, .navbar > .container, > .container, .content-wrap > div > .container, footer > .container {
+body > .container, .navbar > .container, > .container, .content-wrap > div > .container, .content-wrap > main > div > .container, footer > .container {
   max-width: 1000px;
 }
 
@@ -1097,7 +1108,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 }
 
 .highlighted-text {
-  color: #0066cc !important;
+  color: #4da3ff !important; /* light blue: 5.9:1 on the dark rows (FIRST-TIMER-19) */
 }
 
 .newer-older-blocks-btns {
@@ -1385,6 +1396,7 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .digidollar-badge.oracle .digidollar-mark {
   background: #45a6ff;
+  color: #002352 !important; /* dark text: 6.2:1 on this blue; white was 2.6:1 (FIRST-TIMER-19) */
 }
 
 .digidollar-badge.activity {
@@ -1908,8 +1920,8 @@ body > .container, .navbar > .container, > .container, .content-wrap > div > .co
 
 .footer_container_content_row_social-media_link {
   cursor: pointer;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px; /* SLOW-8 */
   border: 1px solid #4e4e4e;
   margin-right: 10px;
   display: flex;
@@ -1965,8 +1977,24 @@ img.footer_container_content_onion-links_icon {
   color: rgba(0, 195, 255, 1) !important;
 }
 
+.footer_container_content_sites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  margin-top: 20px;
+}
+.footer_container_content_sites a,
+.footer_container_content_sites a:link,
+.footer_container_content_sites a:visited {
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+}
+
 .footer_container_content_copyright {
-  color: rgba(169, 177, 182, 1);
+  color: #fff; /* 5.6:1 on the blue footer (FIRST-TIMER-19) */
   font-size: 14px;
   width: 100%;
   margin-top: 30px;
@@ -1995,6 +2023,18 @@ img.footer_container_content_onion-links_icon {
 
 .block-hash span, .stats-table a, .transaction-box .header a {
   word-wrap: break-word;
+}
+
+/* Readable colors on the dark stats boxes and on the white address header (FIRST-TIMER-19) */
+.stats-table a, .stats-table a:link, .stats-table a:visited { color: #4da3ff; }
+.stats-table .text-danger { color: #ff7a85 !important; }
+.addr-page .block-hash .text-gray { color: #002352 !important; }
+
+/* Labels with a plain-English tooltip (FIRST-TIMER-17) */
+.hint {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: help;
 }
 
 .disabled {
@@ -2914,7 +2954,9 @@ dl.mempool-histogram .bar:before {
 /* Remove the old margin-right from sub-nav links */
 .sub-nav a {
   color: #ffffff;
-  padding-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* SLOW-8 */
 }
 
 /* Make search container take remaining space */
@@ -3016,6 +3058,9 @@ h3.table-title {
   align-items: center;
   margin-top: 20px;
 }
+.dash-container .view-more, .dash-container .view-more:link, .dash-container .view-more:visited {
+  color: #4da3ff; /* on the dark tables (FIRST-TIMER-19) */
+}
 
 .dash-container .view-more img {
   margin-left: 5px;
@@ -3116,9 +3161,14 @@ h3.table-title {
   .main-nav li a, .sub-nav a {
     font-size: 16px;
   }
-  /* the 50px desktop gap makes the nav row wider than a phone screen */
+  /* the 50px desktop gap makes the nav row wider than a phone screen;
+     on the smallest phones "DigiByte Stats" wraps to a second row */
+  .sub-nav a {
+    font-size: 15px; /* keeps the four links on one row from 375px up */
+  }
   .sub-nav {
     gap: 0;
+    flex-wrap: wrap;
     align-self: stretch;
   }
   /* tighter header row so logo, title and link fit */
@@ -3175,7 +3225,6 @@ h3.table-title {
   line-height: 1.2;
   font-size: 1rem;
   margin: 0;
-  opacity: 0.8;
 }
 
 /* small phones (360-399 px): a smaller title keeps logo, title and link on one row */
@@ -3187,12 +3236,11 @@ h3.table-title {
 }
 
 /* Static intro inside #explorer for crawlers and visitors without JavaScript.
-   The app replaces it as soon as it starts. It fades in after 1s so visitors
-   with JavaScript do not see it flash before the app renders. */
+   The app replaces it as soon as it starts. It shows at once: on a slow network it is
+   the first thing visitors see (SLOW-4). */
 .seo-intro {
   padding: 48px 16px;
   max-width: 720px;
-  animation: seo-intro-in .3s ease-in 1s both;
 }
 .seo-intro h1 {
   color: #0066cc;
@@ -3209,8 +3257,4 @@ h3.table-title {
 }
 .seo-intro li {
   margin: 6px 0;
-}
-@keyframes seo-intro-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }

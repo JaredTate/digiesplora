@@ -132,3 +132,16 @@ export const isDigiByteAddress = (str, net = MAINNET) => {
 
 // In the Elements/Liquid flavours there is no DigiByte check
 export const isValidSearchAddress = process.env.IS_ELEMENTS ? (_ => true) : (str => isDigiByteAddress(str))
+
+// A string shaped like a DigiByte address (D…, S… or dgb1…) that fails the checksum is most likely a typo (FIRST-TIMER-11)
+export const TYPO_ADDRESS = 'This looks like a DigiByte address, but it has a typo. Check each character.'
+
+const looksLikeDigiByte = str =>
+  typeof str == 'string' && (/^[DS][1-9A-HJ-NP-Za-km-z]{24,}$/.test(str) || /^dgb1[02-9ac-hj-np-z]{8,}$/i.test(str))
+
+// Message for an address that failed isValidSearchAddress
+// (a base58 string with a good checksum but another version byte belongs to another coin, not a typo)
+export const badAddressMessage = str =>
+    !looksLikeDigiByte(str) ? NOT_DGB_ADDRESS
+  : /^dgb1/i.test(str) || !base58check(str) ? TYPO_ADDRESS
+  : NOT_DGB_ADDRESS

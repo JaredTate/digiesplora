@@ -1,4 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
+import { hintLabel } from './hints'
 import {
   digidollarOutputRows,
   digidollarOutputSummary,
@@ -57,12 +58,12 @@ const standard = (vout, { isOpen, spend, t, ...S }) => layout(
     }
 
     <div className="vout-body-row">
-      <div>{t`scriptPubKey (asm)`}</div>
+      {hintLabel(t, 'scriptPubKey (asm)')}
       <div className="mono">{vout.scriptpubkey_asm}</div>
     </div>
 
     <div className="vout-body-row">
-      <div>{t`scriptPubKey (hex)`}</div>
+      {hintLabel(t, 'scriptPubKey (hex)')}
       <div className="mono">{vout.scriptpubkey}</div>
     </div>
 

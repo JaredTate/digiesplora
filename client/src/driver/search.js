@@ -1,7 +1,7 @@
 import request from 'superagent'
 import { tryUnconfidentialAddress, isHash256 } from '../util'
 import { Observable as O } from '../rxjs'
-import { isValidSearchAddress, NOT_DGB_ADDRESS } from '../lib/dgb-address'
+import { isValidSearchAddress, badAddressMessage } from '../lib/dgb-address'
 
 const reNumber  = /^\d+$/
     , reAddrLike = /^([a-km-zA-HJ-NP-Z1-9]{26,35}|[a-km-zA-HJ-NP-Z1-9]{80}|[a-z]{2,5}1[ac-hj-np-z02-9]{8,100}|[A-Z]{2,5}1[AC-HJ-NP-Z02-9]{8,100})$/
@@ -44,10 +44,10 @@ export default apiBase => {
         .catch(_ => null)
 
     // lookup as address if it resembles one
-    // (but say so right away if it is not a DigiByte address, e.g. a Bitcoin one)
+    // (but say so right away if it is not a DigiByte address, e.g. a Bitcoin one, or has a typo)
     : reAddrLike.test(query)
     ? !isValidSearchAddress(tryUnconfidentialAddress(query))
-      ? { error: NOT_DGB_ADDRESS }
+      ? { error: badAddressMessage(tryUnconfidentialAddress(query)) }
       : tryResource(`/address/${tryUnconfidentialAddress(query)}`)
         // use the user-provided address and not the (potentially) unconfidential one
         .then(_ => `/address/${query}`)

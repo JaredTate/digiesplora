@@ -1,4 +1,5 @@
 import Snabbdom from 'snabbdom-pragma'
+import { hintLabel } from './hints'
 import { linkToParentOut, formatOutAmount, formatAssetAmount, formatHex, linkToAddr, formatNumber } from './util'
 
 const layout = (vin, desc, body, { t, ...S }) =>
@@ -94,17 +95,17 @@ const standard = (vin, { isOpen, t, ...S }, assetMeta=getAssetMeta(vin, S)) => l
 
     { vin.scriptsig && [
       <div className="vin-body-row">
-        <div>{t`scriptSig (asm)`}</div>
+        {hintLabel(t, 'scriptSig (asm)')}
         <div className="mono">{vin.scriptsig_asm}</div>
       </div>
     , <div className="vin-body-row">
-        <div>{t`scriptSig (hex)`}</div>
+        {hintLabel(t, 'scriptSig (hex)')}
         <div className="mono">{vin.scriptsig}</div>
       </div>
     ] }
 
     { vin.witness && <div className="vin-body-row">
-      <div>{t`Witness`}</div>
+      {hintLabel(t, 'Witness')}
       <div className="mono">{vin.witness.map(wit => [ ' ', wit.length ? wit : <em>&lt;empty&gt;</em> ])}</div>
     </div> }
 
@@ -119,7 +120,7 @@ const standard = (vin, { isOpen, t, ...S }, assetMeta=getAssetMeta(vin, S)) => l
     </div> }
 
     <div className="vin-body-row">
-      <div>{t`nSequence`}</div>
+      {hintLabel(t, 'nSequence')}
       <div className="mono">{formatHex(vin.sequence)}</div>
     </div>
 
